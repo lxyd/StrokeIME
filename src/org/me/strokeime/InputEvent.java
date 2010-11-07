@@ -3,8 +3,10 @@ package org.me.strokeime;
 
 import java.util.EventObject;
 
-public class InputEvent extends EventObject {
-    public InputEvent(Object source) {
+public final class InputEvent extends EventObject {
+    public final CharSequence text;
+    public InputEvent(Object source, CharSequence text) {
         super(source);
+        this.text = text;
     }
 }

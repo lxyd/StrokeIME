@@ -12,25 +12,59 @@ import android.content.res.Resources;
 import android.util.TypedValue;
 
 public class InputView extends View {
+    // colors
     private int mForegroundColor;
     private int mBackgroundColor;
     private Paint mFillPaint;
     private Paint mStrokePaint;
 
-    public InputView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-    public InputView(Context context) {
-        super(context);
+    // areas sizes
+    private RectF mCenterAreaRect = new RectF();
+    private float mHorizontalLineY;
+    private float mVerticalLine1X;
+    private float mVerticalLine2X;
+
+    // current stroke initial position
+    private int mStrokeStartZone;
+
+    private InputEventListener mInputListener = null;
+
+    public InputView(Context context, AttributeSet attrs) { super(context, attrs); }
+    public InputView(Context context) { super(context); }
+
+    public final void setInputEventListener (InputEventListener listener) {
+        mInputListener = listener;
     }
 
-    private InputEventListener inputListener = null;
-
-    public void setInputEventListener (InputEventListener listener) {
-        this.inputListener = listener;
+    private final int getZone (float x, float y) {
+        int w, h;
+        w = getWidth();
+        h = getHeight();
+        if(x < 0 || y < 0 || x > w || y > h) {
+            // when point is outside of our View
+            return -1;
+        } else if(Util.pointInOval(mCenterAreaRect, x, y)) {
+            return 0;
+        } else if(y < mHorizontalLineY) {
+            if(x < mVerticalLine1X) {
+                return 1;
+            } else if(x < mVerticalLine2X) {
+                return 2;
+            } else {
+                return 3;
+            }
+        } else {
+            if(x < mVerticalLine1X) {
+                return 4;
+            } else if(x < mVerticalLine2X) {
+                return 5;
+            } else {
+                return 6;
+            }
+        }
     }
     
-    public void setColors(int foreground, int background) {
+    public final void setColors(int foreground, int background) {
         mForegroundColor = foreground;
         mBackgroundColor = background;
         mFillPaint = new Paint();
@@ -43,9 +77,12 @@ public class InputView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_UP) {
-            if(inputListener != null)
-                inputListener.onInput(new InputEvent(this));
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            mStrokeStartZone = getZone(event.getX(), event.getY());
+        } else if (event.getAction() == MotionEvent.ACTION_UP) {
+            int strokeEndZone = getZone(event.getX(), event.getY());
+            if(mInputListener != null)
+                mInputListener.onInput(new InputEvent(this, "" + mStrokeStartZone + " -> " + strokeEndZone + "\n"));
         }
         return true;
     }
@@ -58,12 +95,11 @@ public class InputView extends View {
 
         canvas.drawPaint(mFillPaint);
 
-        canvas.drawLine(w/3, 0, w/3, h, mStrokePaint);
-        canvas.drawLine(2*w/3, 0, 2*w/3, h, mStrokePaint);
-        canvas.drawLine(0, h/2, w, h/2, mStrokePaint);
-        RectF r = new RectF(w/5, h/3, 4*w/5, 2*h/3);
-        canvas.drawOval(r, mFillPaint);
-        canvas.drawOval(r, mStrokePaint);
+        canvas.drawLine(mVerticalLine1X, 0, mVerticalLine1X, h, mStrokePaint);
+        canvas.drawLine(mVerticalLine2X, 0, mVerticalLine2X, h, mStrokePaint);
+        canvas.drawLine(0, mHorizontalLineY, w, mHorizontalLineY, mStrokePaint);
+        canvas.drawOval(mCenterAreaRect, mFillPaint);
+        canvas.drawOval(mCenterAreaRect, mStrokePaint);
 
         invalidate();
     }
@@ -74,5 +110,16 @@ public class InputView extends View {
         int h = MeasureSpec.getSize(heightMeasureSpec);
         h = Math.min(w, h)/2;
         setMeasuredDimension(w, h);
+    }
+
+    @Override
+    protected void onSizeChanged (int w, int h, int oldw, int oldh) {
+        mHorizontalLineY = h/2.0f;
+        mVerticalLine1X  = w/3.0f;
+        mVerticalLine2X  = 2*w/3.0f;
+        mCenterAreaRect.left   = w/5.0f;
+        mCenterAreaRect.top    = h/3.0f;
+        mCenterAreaRect.right  = 4*w/5.0f;
+        mCenterAreaRect.bottom = 2*h/3.0f;
     }
 }

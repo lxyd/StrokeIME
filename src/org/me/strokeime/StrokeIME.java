@@ -63,7 +63,8 @@ public class StrokeIME extends InputMethodService implements InputEventListener
         //android.widget.Toast toast = android.widget.Toast.makeText(context, "HELLO!", android.widget.Toast.LENGTH_SHORT);
         //toast.show();
         InputConnection c = getCurrentInputConnection();
-        c.commitText("\u041F\u0440\u0438\u0432\u0435\u0442",0);
+        c.commitText(event.text, 0);
+        //c.commitText("\u041F\u0440\u0438\u0432\u0435\u0442",0);
         //c.sendKeyEvent(e);
     }
 }
