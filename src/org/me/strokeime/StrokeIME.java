@@ -45,6 +45,7 @@ public class StrokeIME extends InputMethodService implements InputEventListener
         //mInputView = (InputView) getLayoutInflater().inflate(
         //        R.layout.input, null);
         mInputView = new InputView(this);
+        mInputView.setColors(getResources().getColor(R.color.input_foreground_dark), getResources().getColor(R.color.input_background_dark));
         mInputView.setInputEventListener(this);
         return mInputView;
     }
