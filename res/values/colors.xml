@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="input_background_dark">#FF000000</color>
+    <color name="input_background_light">#FFFCFCFC</color>
+    <color name="input_foreground_dark">#FFFCFCFC</color>
+    <color name="input_foreground_light">#FF000000</color>
+</resources>
