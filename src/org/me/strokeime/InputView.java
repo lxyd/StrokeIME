@@ -27,6 +27,8 @@ public class InputView extends View {
     // current stroke initial position
     private int mStrokeStartZone;
 
+    private Action[][] mActionTable;
+
     private InputEventListener mInputListener = null;
 
     public InputView(Context context, AttributeSet attrs) { super(context, attrs); }
@@ -35,6 +37,10 @@ public class InputView extends View {
     public final void setInputEventListener (InputEventListener listener) {
         mInputListener = listener;
     }
+    public final void setActionTable (Action[][] actionTable){
+        mActionTable = actionTable;
+        // TODO: invalidate view
+    }
 
     private final int getZone (float x, float y) {
         int w, h;
@@ -42,24 +48,24 @@ public class InputView extends View {
         h = getHeight();
         if(x < 0 || y < 0 || x > w || y > h) {
             // when point is outside of our View
-            return -1;
+            return 0xA;
         } else if(Util.pointInOval(mCenterAreaRect, x, y)) {
-            return 0;
+            return 0x0;
         } else if(y < mHorizontalLineY) {
             if(x < mVerticalLine1X) {
-                return 1;
+                return 0x1;
             } else if(x < mVerticalLine2X) {
-                return 2;
+                return 0x2;
             } else {
-                return 3;
+                return 0x3;
             }
         } else {
             if(x < mVerticalLine1X) {
-                return 4;
+                return 0x4;
             } else if(x < mVerticalLine2X) {
-                return 5;
+                return 0x5;
             } else {
-                return 6;
+                return 0x6;
             }
         }
     }
@@ -82,7 +88,8 @@ public class InputView extends View {
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
             int strokeEndZone = getZone(event.getX(), event.getY());
             if(mInputListener != null)
-                mInputListener.onInput(new InputEvent(this, "" + mStrokeStartZone + " -> " + strokeEndZone + "\n"));
+                mInputListener.onInput(new InputEvent(this, mActionTable[mStrokeStartZone][strokeEndZone]));
+                //mInputListener.onInput(new InputEvent(this, "" + Integer.toHexString(mStrokeStartZone) + " -> " + Integer.toHexString(strokeEndZone) + "\n"));
         }
         return true;
     }

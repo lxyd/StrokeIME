@@ -4,9 +4,9 @@ package org.me.strokeime;
 import java.util.EventObject;
 
 public final class InputEvent extends EventObject {
-    public final CharSequence text;
-    public InputEvent(Object source, CharSequence text) {
+    public final Action action;
+    public InputEvent(Object source, Action action) {
         super(source);
-        this.text = text;
+        this.action = action;
     }
 }

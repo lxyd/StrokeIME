@@ -4,11 +4,17 @@ import android.inputmethodservice.InputMethodService;
 import android.view.inputmethod.InputConnection;
 import android.view.KeyEvent;
 import android.view.View;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
+import java.io.IOException;
 
 public class StrokeIME extends InputMethodService implements InputEventListener
 {
     private InputView mInputView;
     private int mLastDisplayWidth;
+    private Action[][] mActionTableEn;
+    // TODO: add action tables for other layouts
 
     /**
      * Main initialization of the input method component.  Be sure to call
@@ -31,6 +37,16 @@ public class StrokeIME extends InputMethodService implements InputEventListener
             if (displayWidth == mLastDisplayWidth) return;
             mLastDisplayWidth = displayWidth;
         }*/
+        if (mActionTableEn == null) {
+            try {
+                BufferedReader r = new BufferedReader(
+                        new InputStreamReader(getResources().openRawResource(R.raw.layout_en),"UTF8"));
+                mActionTableEn = Util.loadActionTable(r);
+                r.close();
+            } catch (IOException ex) {
+                // TODO: log error
+            }
+        }
     }
 
     /**
@@ -40,13 +56,10 @@ public class StrokeIME extends InputMethodService implements InputEventListener
      * a configuration change.
      */
     @Override public View onCreateInputView() {
-        //mInputView = (View) getLayoutInflater().inflate(
-        //        R.layout.input, null);
-        //mInputView = (InputView) getLayoutInflater().inflate(
-        //        R.layout.input, null);
         mInputView = new InputView(this);
         mInputView.setColors(getResources().getColor(R.color.input_foreground_dark), getResources().getColor(R.color.input_background_dark));
         mInputView.setInputEventListener(this);
+        mInputView.setActionTable(mActionTableEn);
         return mInputView;
     }
 
@@ -63,8 +76,12 @@ public class StrokeIME extends InputMethodService implements InputEventListener
         //android.widget.Toast toast = android.widget.Toast.makeText(context, "HELLO!", android.widget.Toast.LENGTH_SHORT);
         //toast.show();
         InputConnection c = getCurrentInputConnection();
-        c.commitText(event.text, 0);
-        //c.commitText("\u041F\u0440\u0438\u0432\u0435\u0442",0);
-        //c.sendKeyEvent(e);
+        
+        if(event.action == null)
+            return; // TODO: better action
+
+        if(event.action.actionType == Action.ACTION_CHAR) {
+            c.commitText(Character.toString(event.action.value), 0);
+        }
     }
 }
