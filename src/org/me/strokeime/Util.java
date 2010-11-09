@@ -18,14 +18,21 @@ public final class Util {
         return dx*c*dx*c + dy*dy <= d*d/4;
     }
 
-    public static final int hexCharToIndex(char x) {
-        if(x >= '0' && x <= '9')
-            return x - '0';
-        if(x >= 'a' && x <= 'z')
-            return x - 'a' + 10;
-        if(x >= 'A' && x <= 'Z')
-            return x - 'A' + 10;
-        return -1;
+    public static final int zoneCharToIndex(char x) {
+        switch(x) {
+            case 'c': return 0x0;
+            case 'L': return 0x1;
+            case 'M': return 0x2;
+            case 'R': return 0x3;
+            case 'l': return 0x4;
+            case 'm': return 0x5;
+            case 'r': return 0x6;
+            case 'N': return 0xA;
+            case 'E': return 0xB;
+            case 'S': return 0xC;
+            case 'W': return 0xD;
+            default:  return -1;
+        }
     }
 
     public static final Action[][] loadActionTable(BufferedReader r) throws IOException {
@@ -34,17 +41,17 @@ public final class Util {
         Action[][] res = new Action[16][16];
 
         while((s = r.readLine()) != null) {
-            if(s.equals(""))
+            if(s.equals("") || s.startsWith("#"))
                 continue;
 
             switch(s.charAt(2)) {
                 case '!':
                     // read layout change
-                    // TODO:
+                    a = Action.createChangeLayoutAction(s.substring(3));
                     break;
                 case ':':
-                    // read char
-                    a = new Action(s.charAt(3));
+                    // read string
+                    a = Action.createTextAction(s.substring(3));
                     break;
                 case '=':
                     // read special event like ENTER
@@ -52,7 +59,8 @@ public final class Util {
                     break;
             }
 
-            res[hexCharToIndex(s.charAt(0))][hexCharToIndex(s.charAt(1))] = a;
+            // TODO: log errors
+            res[zoneCharToIndex(s.charAt(0))][zoneCharToIndex(s.charAt(1))] = a;
         }
 
         return res;

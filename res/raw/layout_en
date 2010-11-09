@@ -1,33 +1,50 @@
-0A!en-shift!char
-1A!num!word
-3A!spec!char
-4A!ru!
-00: 
-01:a
-02:b
-03:c
-04:d
-05=enter
-06:e
-10:f
-11:g
-12:h
-13:i
-14:j
-15:k
-16:l
-20:m
-21:n
-22:o
-23:p
-24:q
-25:r
-26:s
-30:t
-31:u
-32:v
-33:w
-34:x
-35:y
-36:z
-66:ы
+#
+# zones:
+#
+#   c - center
+#
+#   L - left top
+#   M - middle top
+#   R - right top
+#
+#   l - left bottom
+#   m - middle bottom
+#   r - right bottom
+#   
+#   N - outer top (north)
+#   S - outer bottom (south)
+#   W - outer left (west)
+#   E - outer right (east)
+#
+MN=shift
+LN!num
+RN!ru
+cc: 
+cL:a
+cM:b
+cR:c
+cl:d
+cm=enter
+cr:e
+Lc:f
+LL:g
+LM:h
+LR:i
+Ll:j
+Lm:k
+Lr:l
+Mc:m
+ML:n
+MM:o
+MR:p
+Ml:q
+Mm:r
+Mr:s
+Rc:t
+RL:u
+Rm:V
+RR:w
+Rl:x
+Rm:y
+Rr:z
+rr:ыыыы

@@ -80,8 +80,8 @@ public class StrokeIME extends InputMethodService implements InputEventListener
         if(event.action == null)
             return; // TODO: better action
 
-        if(event.action.actionType == Action.ACTION_CHAR) {
-            c.commitText(Character.toString(event.action.value), 0);
+        if(event.action.actionType == Action.ACTION_TEXT) {
+            c.commitText(event.action.value, 0);
         }
     }
 }

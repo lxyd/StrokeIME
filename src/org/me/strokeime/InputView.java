@@ -42,30 +42,30 @@ public class InputView extends View {
         // TODO: invalidate view
     }
 
-    private final int getZone (float x, float y) {
+    private final char getZone (float x, float y) {
         int w, h;
         w = getWidth();
         h = getHeight();
         if(x < 0 || y < 0 || x > w || y > h) {
             // when point is outside of our View
-            return 0xA;
+            return 'N';
         } else if(Util.pointInOval(mCenterAreaRect, x, y)) {
-            return 0x0;
+            return 'c';
         } else if(y < mHorizontalLineY) {
             if(x < mVerticalLine1X) {
-                return 0x1;
+                return 'L';
             } else if(x < mVerticalLine2X) {
-                return 0x2;
+                return 'M';
             } else {
-                return 0x3;
+                return 'R';
             }
         } else {
             if(x < mVerticalLine1X) {
-                return 0x4;
+                return 'l';
             } else if(x < mVerticalLine2X) {
-                return 0x5;
+                return 'm';
             } else {
-                return 0x6;
+                return 'r';
             }
         }
     }
@@ -84,9 +84,9 @@ public class InputView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            mStrokeStartZone = getZone(event.getX(), event.getY());
+            mStrokeStartZone = Util.zoneCharToIndex(getZone(event.getX(), event.getY()));
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
-            int strokeEndZone = getZone(event.getX(), event.getY());
+            int strokeEndZone = Util.zoneCharToIndex(getZone(event.getX(), event.getY()));
             if(mInputListener != null)
                 mInputListener.onInput(new InputEvent(this, mActionTable[mStrokeStartZone][strokeEndZone]));
                 //mInputListener.onInput(new InputEvent(this, "" + Integer.toHexString(mStrokeStartZone) + " -> " + Integer.toHexString(strokeEndZone) + "\n"));
