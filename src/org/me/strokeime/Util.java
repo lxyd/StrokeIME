@@ -55,7 +55,7 @@ public final class Util {
                     break;
                 case '=':
                     // read special event like ENTER
-                    // TODO:
+                    a = Action.createSpecialAction(Action.stringToActionType(s.substring(3)));
                     break;
             }
 
