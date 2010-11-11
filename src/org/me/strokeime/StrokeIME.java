@@ -1,5 +1,7 @@
+
 package org.me.strokeime;
 
+import org.me.strokeime.layouts.*;
 import android.inputmethodservice.InputMethodService;
 import android.view.inputmethod.InputConnection;
 import android.view.KeyEvent;
@@ -13,7 +15,7 @@ public class StrokeIME extends InputMethodService implements InputEventListener
 {
     private InputView mInputView;
     private int mLastDisplayWidth;
-    private Action[][] mActionTableEn;
+    private Layout mLayoutLat;
     // TODO: add action tables for other layouts
 
     /**
@@ -37,15 +39,8 @@ public class StrokeIME extends InputMethodService implements InputEventListener
             if (displayWidth == mLastDisplayWidth) return;
             mLastDisplayWidth = displayWidth;
         }*/
-        if (mActionTableEn == null) {
-            try {
-                BufferedReader r = new BufferedReader(
-                        new InputStreamReader(getResources().openRawResource(R.raw.layout_en),"UTF8"));
-                mActionTableEn = Util.loadActionTable(r);
-                r.close();
-            } catch (IOException ex) {
-                // TODO: log error
-            }
+        if (mLayoutLat == null) {
+            mLayoutLat = new LayoutLat();
         }
     }
 
@@ -59,7 +54,7 @@ public class StrokeIME extends InputMethodService implements InputEventListener
         mInputView = new InputView(this);
         mInputView.setColors(getResources().getColor(R.color.input_foreground_dark), getResources().getColor(R.color.input_background_dark));
         mInputView.setInputEventListener(this);
-        mInputView.setActionTable(mActionTableEn);
+        mInputView.setLayout(mLayoutLat, Layout.SHIFT_DOWN);
         return mInputView;
     }
 
@@ -80,8 +75,16 @@ public class StrokeIME extends InputMethodService implements InputEventListener
         if(event.action == null)
             return; // TODO: better action
 
-        if(event.action.actionType == Action.ACTION_TEXT) {
-            c.commitText(event.action.value, 0);
+        switch(event.action.actionType) {
+            case Action.TYPE_TEXT:
+                c.commitText(event.action.value, 0);
+                break;
+            case Action.TYPE_CODE:
+                c.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, event.action.keyCode));
+                c.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, event.action.keyCode));
+                break;
+            case Action.TYPE_LAYOUT:
+                break;
         }
     }
 }

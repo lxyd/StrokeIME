@@ -24,10 +24,11 @@ public class InputView extends View {
     private float mVerticalLine1X;
     private float mVerticalLine2X;
 
-    // current stroke initial position
+    // current stroke's initial position
     private int mStrokeStartZone;
 
-    private Action[][] mActionTable;
+    private Layout mLayout;
+    private int mShiftState;
 
     private InputEventListener mInputListener = null;
 
@@ -37,39 +38,12 @@ public class InputView extends View {
     public final void setInputEventListener (InputEventListener listener) {
         mInputListener = listener;
     }
-    public final void setActionTable (Action[][] actionTable){
-        mActionTable = actionTable;
+    public final void setLayout (Layout layout, int shiftState){
+        mLayout = layout;
+        mShiftState = shiftState;
         // TODO: invalidate view
     }
 
-    private final char getZone (float x, float y) {
-        int w, h;
-        w = getWidth();
-        h = getHeight();
-        if(x < 0 || y < 0 || x > w || y > h) {
-            // when point is outside of our View
-            return 'N';
-        } else if(Util.pointInOval(mCenterAreaRect, x, y)) {
-            return 'c';
-        } else if(y < mHorizontalLineY) {
-            if(x < mVerticalLine1X) {
-                return 'L';
-            } else if(x < mVerticalLine2X) {
-                return 'M';
-            } else {
-                return 'R';
-            }
-        } else {
-            if(x < mVerticalLine1X) {
-                return 'l';
-            } else if(x < mVerticalLine2X) {
-                return 'm';
-            } else {
-                return 'r';
-            }
-        }
-    }
-    
     public final void setColors(int foreground, int background) {
         mForegroundColor = foreground;
         mBackgroundColor = background;
@@ -79,17 +53,47 @@ public class InputView extends View {
         mStrokePaint.setColor(mForegroundColor);
         mStrokePaint.setStyle(Paint.Style.STROKE);
         mStrokePaint.setStrokeWidth(1);
+        // TODO: invalidate view
+    }
+
+    private final int getZone (float x, float y) {
+        int w, h;
+        w = getWidth();
+        h = getHeight();
+        if(x < 0 || y < 0 || x > w || y > h) {
+            // when point is outside of our View
+            // TODO: add support for OB,OR,OL
+            return Layout.OT;
+        } else if(Util.pointInOval(mCenterAreaRect, x, y)) {
+            return Layout.MC;
+        } else if(y < mHorizontalLineY) {
+            if(x < mVerticalLine1X) {
+                return Layout.LT;
+            } else if(x < mVerticalLine2X) {
+                return Layout.MT;
+            } else {
+                return Layout.RT;
+            }
+        } else {
+            if(x < mVerticalLine1X) {
+                return Layout.LB;
+            } else if(x < mVerticalLine2X) {
+                return Layout.MB;
+            } else {
+                return Layout.RB;
+            }
+        }
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            mStrokeStartZone = Util.zoneCharToIndex(getZone(event.getX(), event.getY()));
+            mStrokeStartZone = getZone(event.getX(), event.getY());
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
-            int strokeEndZone = Util.zoneCharToIndex(getZone(event.getX(), event.getY()));
-            if(mInputListener != null)
-                mInputListener.onInput(new InputEvent(this, mActionTable[mStrokeStartZone][strokeEndZone]));
-                //mInputListener.onInput(new InputEvent(this, "" + Integer.toHexString(mStrokeStartZone) + " -> " + Integer.toHexString(strokeEndZone) + "\n"));
+            int strokeEndZone = getZone(event.getX(), event.getY());
+            Action a = mLayout.getAction(mShiftState, mStrokeStartZone, strokeEndZone);
+            if(mInputListener != null && a != null)
+                mInputListener.onInput(new InputEvent(this, a));
         }
         return true;
     }
