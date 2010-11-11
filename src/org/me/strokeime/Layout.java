@@ -79,7 +79,8 @@ public abstract class Layout {
         map[SHIFT_UP][start][end] = new Key(Action.createTextAction(upper), labelUpper);
     }
 
-    /**
+    /*
+    / **
      * Register usual char stroke in the map.
      * 
      * @param start         Start zone
@@ -88,11 +89,12 @@ public abstract class Layout {
      * @param upper         Character (may be, string) to type when Shift button is pressed
      * @param drawableLower Keyboard picture for this character when Shift button is not pressed
      * @param drawableUpper Keyboard picture for this character when Shift button is pressed
-     */
+     * /
     protected final void s(int start, int end, String lower, String upper, int drawableLower, int drawableUpper) {
         map[SHIFT_DOWN][start][end] = new Key(Action.createTextAction(lower), drawableLower);
         map[SHIFT_UP][start][end] = new Key(Action.createTextAction(upper), drawableUpper);
     }
+    */
 
     /**
      * Register stroke in the map with keycode as the event param.
@@ -123,7 +125,8 @@ public abstract class Layout {
         map[SHIFT_UP][start][end] = map[SHIFT_DOWN][start][end] = new Key(Action.createLayoutAction(layoutName), label);
     }
 
-    /**
+    /*
+    / **
      * Register ChangeLayout stroke in the map.
      * This will work for both shifted and not shifted states
      *
@@ -131,9 +134,10 @@ public abstract class Layout {
      * @param end        End zone
      * @param layoutName Layout to change to
      * @param drawable   Keyboard picture for this layout
-     */
+     * /
     protected final void l(int start, int end, String layoutName, int drawable) {
         map[SHIFT_UP][start][end] = map[SHIFT_DOWN][start][end] = new Key(Action.createLayoutAction(layoutName), drawable);
     }
+    */
 }
 

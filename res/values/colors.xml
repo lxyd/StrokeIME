@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="input_background_dark">#FF000000</color>
+    <color name="input_foreground_dark">#FF949494</color>
+    <color name="input_bright_dark">#FFB4B4B4</color>
+    <color name="input_dimmed_dark">#FF545454</color>
+
     <color name="input_background_light">#FFFCFCFC</color>
-    <color name="input_foreground_dark">#FFFCFCFC</color>
-    <color name="input_foreground_light">#FF000000</color>
+    <color name="input_foreground_light">#FF545454</color>
+    <color name="input_bright_light">#FF141414</color>
+    <color name="input_dimmed_light">#FF949494</color>
 </resources>

@@ -6,6 +6,7 @@ import android.inputmethodservice.InputMethodService;
 import android.view.inputmethod.InputConnection;
 import android.view.KeyEvent;
 import android.view.View;
+import android.content.res.Resources;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
@@ -16,6 +17,8 @@ public class StrokeIME extends InputMethodService implements InputEventListener
     private InputView mInputView;
     private int mLastDisplayWidth;
     private Layout mLayoutLat;
+    private ColorTheme colorThemeDark;
+    private ColorTheme colorThemeLight;
     // TODO: add action tables for other layouts
 
     /**
@@ -24,6 +27,20 @@ public class StrokeIME extends InputMethodService implements InputEventListener
      */
     @Override public void onCreate() {
         super.onCreate();
+
+        Resources r = getResources();
+        colorThemeDark = new ColorTheme(
+                r.getColor(R.color.input_background_dark),
+                r.getColor(R.color.input_foreground_dark),
+                r.getColor(R.color.input_bright_dark),
+                r.getColor(R.color.input_dimmed_dark)
+                );
+        colorThemeLight = new ColorTheme(
+                r.getColor(R.color.input_background_light),
+                r.getColor(R.color.input_foreground_light),
+                r.getColor(R.color.input_bright_light),
+                r.getColor(R.color.input_dimmed_light)
+                );
     }
     
     /**
@@ -52,7 +69,8 @@ public class StrokeIME extends InputMethodService implements InputEventListener
      */
     @Override public View onCreateInputView() {
         mInputView = new InputView(this);
-        mInputView.setColors(getResources().getColor(R.color.input_foreground_dark), getResources().getColor(R.color.input_background_dark));
+
+        mInputView.setColorTheme(colorThemeDark);
         mInputView.setInputEventListener(this);
         mInputView.setLayout(mLayoutLat, Layout.SHIFT_DOWN);
         return mInputView;
@@ -80,8 +98,13 @@ public class StrokeIME extends InputMethodService implements InputEventListener
                 c.commitText(event.action.value, 0);
                 break;
             case Action.TYPE_CODE:
+                if(event.action.keyCode == KeyEvent.KEYCODE_A){
+                    mInputView.setColorTheme(colorThemeLight);
+                }
+                c.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SHIFT_LEFT));
                 c.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, event.action.keyCode));
                 c.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, event.action.keyCode));
+                c.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_SHIFT_LEFT));
                 break;
             case Action.TYPE_LAYOUT:
                 break;

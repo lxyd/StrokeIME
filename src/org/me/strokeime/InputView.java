@@ -10,13 +10,17 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.content.res.Resources;
 import android.util.TypedValue;
+import static org.me.strokeime.Layout.*;
 
 public class InputView extends View {
     // colors
-    private int mForegroundColor;
-    private int mBackgroundColor;
+    private ColorTheme mColorTheme;
     private Paint mFillPaint;
     private Paint mStrokePaint;
+    private Paint mStrokePaintBright;
+    private Paint mStrokePaintDim;
+
+    private float mFontSize;
 
     // areas sizes
     private RectF mCenterAreaRect = new RectF();
@@ -41,19 +45,27 @@ public class InputView extends View {
     public final void setLayout (Layout layout, int shiftState){
         mLayout = layout;
         mShiftState = shiftState;
-        // TODO: invalidate view
+        invalidate();
     }
 
-    public final void setColors(int foreground, int background) {
-        mForegroundColor = foreground;
-        mBackgroundColor = background;
+    public final void setColorTheme(ColorTheme colorTheme) {
+        mColorTheme = colorTheme;
+
         mFillPaint = new Paint();
-        mFillPaint.setColor(mBackgroundColor);
-        mStrokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mStrokePaint.setColor(mForegroundColor);
+        mFillPaint.setColor(mColorTheme.bg);
+
+        mStrokePaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.SUBPIXEL_TEXT_FLAG);
+        mStrokePaint.setColor(mColorTheme.fg);
         mStrokePaint.setStyle(Paint.Style.STROKE);
         mStrokePaint.setStrokeWidth(1);
-        // TODO: invalidate view
+
+        mStrokePaintBright = new Paint(mStrokePaint);
+        mStrokePaintBright.setColor(mColorTheme.fgBright);
+
+        mStrokePaintDim = new Paint(mStrokePaint);
+        mStrokePaintDim.setColor(mColorTheme.fgDim);
+
+        invalidate();
     }
 
     private final int getZone (float x, float y) {
@@ -100,19 +112,40 @@ public class InputView extends View {
 
     @Override
     protected void onDraw(Canvas canvas){
-        // TODO: draw letters
         int w = getWidth();
         int h = getHeight();
 
         canvas.drawPaint(mFillPaint);
 
+        canvas.drawLine(0, 0, w, 0, mStrokePaint);
         canvas.drawLine(mVerticalLine1X, 0, mVerticalLine1X, h, mStrokePaint);
         canvas.drawLine(mVerticalLine2X, 0, mVerticalLine2X, h, mStrokePaint);
         canvas.drawLine(0, mHorizontalLineY, w, mHorizontalLineY, mStrokePaint);
         canvas.drawOval(mCenterAreaRect, mFillPaint);
         canvas.drawOval(mCenterAreaRect, mStrokePaint);
 
-        invalidate();
+        float hs = w/9f; // horizontal step
+        float vs = h/6f; // vertical step
+        // begin point
+        float bx;
+        float by;
+        // TODO: draw letters
+        // Labels on the LT area:
+        bx = 0.2f * mFontSize;
+        by = 1.2f * mFontSize;
+        drawKey(canvas, mShiftState, LT, LT, bx,           by          );
+        drawKey(canvas, mShiftState, LT, MT, bx + hs,      by          );
+        drawKey(canvas, mShiftState, LT, RT, bx + hs + hs, by          );
+        drawKey(canvas, mShiftState, LT, LB, bx,           by + vs + vs);
+        drawKey(canvas, mShiftState, LT, MB, bx + hs,      by + vs + vs);
+        drawKey(canvas, mShiftState, LT, RB, bx + hs + hs, by + vs + vs);
+    }
+
+    private void drawKey(Canvas canvas, int shiftState, int strokeStart, int strokeEnd, float x, float y) {
+        Key k = mLayout.getKey(shiftState, strokeStart, strokeEnd);
+        if(k == null) return; // for unused strokes
+        // TODO: add support for drawable keys
+        canvas.drawText(k.label, x, y, mStrokePaint);
     }
 
     @Override
@@ -132,5 +165,8 @@ public class InputView extends View {
         mCenterAreaRect.top    = h/3.0f;
         mCenterAreaRect.right  = 4*w/5.0f;
         mCenterAreaRect.bottom = 2*h/3.0f;
+
+        mFontSize = h/10.0f;
+        mStrokePaint.setTextSize(mFontSize);
     }
 }
