@@ -30,16 +30,18 @@ public class StrokeIME extends InputMethodService implements InputEventListener
 
         Resources r = getResources();
         colorThemeDark = new ColorTheme(
-                r.getColor(R.color.input_background_dark),
-                r.getColor(R.color.input_foreground_dark),
-                r.getColor(R.color.input_bright_dark),
-                r.getColor(R.color.input_dimmed_dark)
+                r.getColor(R.color.dark_bg),
+                r.getColor(R.color.dark_fg),
+                r.getColor(R.color.dark_txt),
+                r.getColor(R.color.dark_txt_hot),
+                r.getColor(R.color.dark_txt_back)
                 );
         colorThemeLight = new ColorTheme(
-                r.getColor(R.color.input_background_light),
-                r.getColor(R.color.input_foreground_light),
-                r.getColor(R.color.input_bright_light),
-                r.getColor(R.color.input_dimmed_light)
+                r.getColor(R.color.light_bg),
+                r.getColor(R.color.light_fg),
+                r.getColor(R.color.light_txt),
+                r.getColor(R.color.light_txt_hot),
+                r.getColor(R.color.light_txt_back)
                 );
     }
     

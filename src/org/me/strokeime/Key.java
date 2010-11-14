@@ -4,19 +4,16 @@ package org.me.strokeime;
 public class Key {
     public final Action action;
     public final String label;
-    //public final int drawableResourceId;
+    public final Gliph gliph;
 
     public Key(Action action, String label) {
         this.action = action;
         this.label = label;
-        //this.drawableResourceId = -1;
+        this.gliph = null;
     }
-
-    /*
-    public Key(Action action, int drawableResourceId) {
+    public Key(Action action, Gliph gliph) {
         this.action = action;
         this.label = null;
-        this.drawableResourceId = drawableResourceId;
+        this.gliph = gliph;
     }
-    */
 }

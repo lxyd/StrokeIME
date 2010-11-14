@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.RectF;
 import android.content.res.Resources;
 import android.util.TypedValue;
@@ -17,10 +18,13 @@ public class InputView extends View {
     private ColorTheme mColorTheme;
     private Paint mFillPaint;
     private Paint mStrokePaint;
-    private Paint mStrokePaintBright;
-    private Paint mStrokePaintDim;
+    private Paint mTextPaint;
+    private Paint mHotTextPaint;
+    private Paint mBackTextPaint;
 
-    private float mFontSize;
+    private float mTextSize;
+    private float mHotTextSize;
+    private float mBackTextSize;
 
     // areas sizes
     private RectF mCenterAreaRect = new RectF();
@@ -36,8 +40,31 @@ public class InputView extends View {
 
     private InputEventListener mInputListener = null;
 
-    public InputView(Context context, AttributeSet attrs) { super(context, attrs); }
-    public InputView(Context context) { super(context); }
+    private void createPaints() {
+        mFillPaint = new Paint();
+        mFillPaint.setStyle(Paint.Style.FILL);
+
+        mStrokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mStrokePaint.setStyle(Paint.Style.STROKE);
+        mStrokePaint.setStrokeWidth(1);
+
+        mTextPaint = new Paint(Paint.SUBPIXEL_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+        mTextPaint.setStyle(Paint.Style.FILL);
+
+        mHotTextPaint = new Paint(Paint.SUBPIXEL_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+        mHotTextPaint.setStyle(Paint.Style.FILL);
+
+        mBackTextPaint = new Paint(Paint.SUBPIXEL_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+        mBackTextPaint.setStyle(Paint.Style.FILL);
+    }
+    public InputView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        createPaints();
+    }
+    public InputView(Context context) {
+        super(context);
+        createPaints();
+    }
 
     public final void setInputEventListener (InputEventListener listener) {
         mInputListener = listener;
@@ -51,19 +78,11 @@ public class InputView extends View {
     public final void setColorTheme(ColorTheme colorTheme) {
         mColorTheme = colorTheme;
 
-        mFillPaint = new Paint();
         mFillPaint.setColor(mColorTheme.bg);
-
-        mStrokePaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.SUBPIXEL_TEXT_FLAG);
         mStrokePaint.setColor(mColorTheme.fg);
-        mStrokePaint.setStyle(Paint.Style.STROKE);
-        mStrokePaint.setStrokeWidth(1);
-
-        mStrokePaintBright = new Paint(mStrokePaint);
-        mStrokePaintBright.setColor(mColorTheme.fgBright);
-
-        mStrokePaintDim = new Paint(mStrokePaint);
-        mStrokePaintDim.setColor(mColorTheme.fgDim);
+        mTextPaint.setColor(mColorTheme.txt);
+        mHotTextPaint.setColor(mColorTheme.txtHot);
+        mBackTextPaint.setColor(mColorTheme.txtBack);
 
         invalidate();
     }
@@ -72,7 +91,8 @@ public class InputView extends View {
         int w, h;
         w = getWidth();
         h = getHeight();
-        if(x < 0 || y < 0 || x > w || y > h) {
+        // add some additional vertical space for the panel
+        if(x < 0 || y < -0.1*h || x > w || y > h) {
             // when point is outside of our View
             // TODO: add support for OB,OR,OL
             return Layout.OT;
@@ -124,28 +144,51 @@ public class InputView extends View {
         canvas.drawOval(mCenterAreaRect, mFillPaint);
         canvas.drawOval(mCenterAreaRect, mStrokePaint);
 
-        float hs = w/9f; // horizontal step
-        float vs = h/6f; // vertical step
-        // begin point
-        float bx;
-        float by;
-        // TODO: draw letters
-        // Labels on the LT area:
-        bx = 0.2f * mFontSize;
-        by = 1.2f * mFontSize;
-        drawKey(canvas, mShiftState, LT, LT, bx,           by          );
-        drawKey(canvas, mShiftState, LT, MT, bx + hs,      by          );
-        drawKey(canvas, mShiftState, LT, RT, bx + hs + hs, by          );
-        drawKey(canvas, mShiftState, LT, LB, bx,           by + vs + vs);
-        drawKey(canvas, mShiftState, LT, MB, bx + hs,      by + vs + vs);
-        drawKey(canvas, mShiftState, LT, RB, bx + hs + hs, by + vs + vs);
+        float hs = getWidth()/9f;    // horizontal step
+        float vs = 1.1f * mTextSize; // vertical step
+
+        float top = 0.1f * mTextSize;
+        drawZoneKeys(canvas, LT, 0f,              top, hs, vs);
+        drawZoneKeys(canvas, MT, mVerticalLine1X, top, hs, vs);
+        drawZoneKeys(canvas, RT, mVerticalLine2X, top, hs, vs);
+        top = h - 3*vs - 0.1f * mTextSize;
+        drawZoneKeys(canvas, LB, 0f,              top, hs, vs);
+        drawZoneKeys(canvas, MB, mVerticalLine1X, top, hs, vs);
+        drawZoneKeys(canvas, RB, mVerticalLine2X, top, hs, vs);
+
+        top = mCenterAreaRect.top + 0.1f * mTextSize;
+        drawZoneKeys(canvas, MC, mVerticalLine1X, top, hs, vs*0.8f);
+        //org.me.strokeime.gliphs.GliphEnter g = new org.me.strokeime.gliphs.GliphEnter();
+        //g.draw(canvas, 200f, 40f, mTextPaint);
     }
 
-    private void drawKey(Canvas canvas, int shiftState, int strokeStart, int strokeEnd, float x, float y) {
+    private final void drawZoneKeys(Canvas canvas, int zone, float bx, float by, float hs, float vs) {
+        drawKey(canvas, mShiftState, zone, OT, bx,      bx+3*hs, by + mBackTextSize);
+        drawKey(canvas, mShiftState, zone, LT, bx,      bx+hs,   by+vs);
+        drawKey(canvas, mShiftState, zone, MT, bx+hs,   bx+2*hs, by+vs);
+        drawKey(canvas, mShiftState, zone, RT, bx+2*hs, bx+3*hs, by+vs);
+        drawKey(canvas, mShiftState, zone, MC, bx+hs,   bx+2*hs, by+2*vs);
+        drawKey(canvas, mShiftState, zone, LB, bx,      bx+hs,   by+3*vs);
+        drawKey(canvas, mShiftState, zone, MB, bx+hs,   bx+2*hs, by+3*vs);
+        drawKey(canvas, mShiftState, zone, RB, bx+2*hs, bx+3*hs, by+3*vs);
+    }
+    private final void drawKey(Canvas canvas, int shiftState, int strokeStart, int strokeEnd, float x1, float x2, float y) {
         Key k = mLayout.getKey(shiftState, strokeStart, strokeEnd);
         if(k == null) return; // for unused strokes
-        // TODO: add support for drawable keys
-        canvas.drawText(k.label, x, y, mStrokePaint);
+
+        Paint p;
+        if(strokeEnd == OT)
+            p = mBackTextPaint;
+        else if(strokeStart == strokeEnd)
+            p = mHotTextPaint;
+        else
+            p = mTextPaint;
+
+        if(k.gliph == null) {
+            canvas.drawText(k.label, x1 + (x2 - x1 - p.measureText(k.label))/2.0f, y, p);
+        } else {
+            k.gliph.draw(canvas,     x1 + (x2 - x1 - k.gliph.measureWidth(p))/2.0f,     y, p);
+        }
     }
 
     @Override
@@ -166,7 +209,10 @@ public class InputView extends View {
         mCenterAreaRect.right  = 4*w/5.0f;
         mCenterAreaRect.bottom = 2*h/3.0f;
 
-        mFontSize = h/10.0f;
-        mStrokePaint.setTextSize(mFontSize);
+        mHotTextSize = mTextSize = h/10.0f;
+        mBackTextSize = h/3.5f;
+        mTextPaint.setTextSize(mTextSize);
+        mHotTextPaint.setTextSize(mHotTextSize);
+        mBackTextPaint.setTextSize(mBackTextSize);
     }
 }

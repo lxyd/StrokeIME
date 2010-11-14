@@ -79,22 +79,20 @@ public abstract class Layout {
         map[SHIFT_UP][start][end] = new Key(Action.createTextAction(upper), labelUpper);
     }
 
-    /*
-    / **
+    /**
      * Register usual char stroke in the map.
      * 
-     * @param start         Start zone
-     * @param end           End zone
-     * @param lower         Character (may be, string) to type when Shift button is not pressed
-     * @param upper         Character (may be, string) to type when Shift button is pressed
-     * @param drawableLower Keyboard picture for this character when Shift button is not pressed
-     * @param drawableUpper Keyboard picture for this character when Shift button is pressed
-     * /
-    protected final void s(int start, int end, String lower, String upper, int drawableLower, int drawableUpper) {
-        map[SHIFT_DOWN][start][end] = new Key(Action.createTextAction(lower), drawableLower);
-        map[SHIFT_UP][start][end] = new Key(Action.createTextAction(upper), drawableUpper);
+     * @param start      Start zone
+     * @param end        End zone
+     * @param lower      Character (may be, string) to type when Shift button is not pressed
+     * @param upper      Character (may be, string) to type when Shift button is pressed
+     * @param gliphLower Keyboard gliph for this character when Shift button is not pressed
+     * @param gliphUpper Keyboard gliph for this character when Shift button is pressed
+     */
+    protected final void s(int start, int end, String lower, String upper, Gliph gliphLower, Gliph gliphUpper) {
+        map[SHIFT_DOWN][start][end] = new Key(Action.createTextAction(lower), gliphLower);
+        map[SHIFT_UP][start][end] = new Key(Action.createTextAction(upper), gliphUpper);
     }
-    */
 
     /**
      * Register stroke in the map with keycode as the event param.
@@ -113,6 +111,22 @@ public abstract class Layout {
     }
 
     /**
+     * Register stroke in the map with keycode as the event param.
+     * This is useful for creating Alt and Ctrl aware layouts or registering strokes
+     * for ENTER, SPACE, BACKSPACE and other special characters
+     * 
+     * @param start      Start zone
+     * @param end        End zone
+     * @param code       Raw keycode to use with Alt and Ctrl
+     * @param gliphLower Keyboard gliph for this character when Shift button is not pressed
+     * @param gliphUpper Keyboard gliph for this character when Shift button is pressed
+     */
+    protected final void c(int start, int end, int code, Gliph gliphLower, Gliph gliphUpper) {
+        map[SHIFT_DOWN][start][end] = new Key(Action.createKeyCodeAction(code), gliphLower);
+        map[SHIFT_UP][start][end] = new Key(Action.createKeyCodeAction(code), gliphUpper);
+    }
+
+    /**
      * Register ChangeLayout stroke in the map.
      * This will work for both shifted and not shifted states
      *
@@ -125,19 +139,17 @@ public abstract class Layout {
         map[SHIFT_UP][start][end] = map[SHIFT_DOWN][start][end] = new Key(Action.createLayoutAction(layoutName), label);
     }
 
-    /*
-    / **
+    /**
      * Register ChangeLayout stroke in the map.
      * This will work for both shifted and not shifted states
      *
      * @param start      Start zone
      * @param end        End zone
      * @param layoutName Layout to change to
-     * @param drawable   Keyboard picture for this layout
-     * /
-    protected final void l(int start, int end, String layoutName, int drawable) {
-        map[SHIFT_UP][start][end] = map[SHIFT_DOWN][start][end] = new Key(Action.createLayoutAction(layoutName), drawable);
+     * @param gliph      Keyboard gliph for this layout
+     */
+    protected final void l(int start, int end, String layoutName, Gliph gliph) {
+        map[SHIFT_UP][start][end] = map[SHIFT_DOWN][start][end] = new Key(Action.createLayoutAction(layoutName), gliph);
     }
-    */
 }
 
