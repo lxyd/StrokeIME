@@ -30,7 +30,7 @@ public class LayoutLat extends Layout {
         s(LT, LB, "c", "C");
         s(LT, MB, "d", "D");
         s(LT, RB, "e", "E");
-        l(LT, OT, "num", "123?");
+        l(LT, OT, "num", "?123");
 
         c(MC, LT, KEYCODE_A, "a", "A");
     }
