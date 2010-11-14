@@ -9,8 +9,8 @@ public class GliphBackspace extends Gliph {
     @Override
     protected final void initialize(Path path) {
         float h=60f, w=120f, b=5f;
-        float b2 = b*(float)Math.sqrt(2f)/2,
-              b3 = b*2/(float)Math.sqrt(2f);
+        float b2 = b*(float)Math.sqrt(2f),
+              b3 = b2/2;
 
         path.moveTo(w, h);
 
@@ -21,9 +21,9 @@ public class GliphBackspace extends Gliph {
         path.lineTo(   w,    h);
 
         path.lineTo(   w-b, h-b);
-        path.lineTo(h/2+b2, h-b); 
-        path.lineTo(    b3, h/2);
-        path.lineTo(h/2+b2,   b);
+        path.lineTo(h/2+b3, h-b); 
+        path.lineTo(    b2, h/2);
+        path.lineTo(h/2+b3,   b);
         path.lineTo(   w-b,   b);
         path.lineTo(   w-b, h-b);
 
