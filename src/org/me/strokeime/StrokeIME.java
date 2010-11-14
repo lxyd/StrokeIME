@@ -16,10 +16,15 @@ public class StrokeIME extends InputMethodService implements InputEventListener
 {
     private InputView mInputView;
     private int mLastDisplayWidth;
-    private Layout mLayoutLat;
-    private ColorTheme colorThemeDark;
-    private ColorTheme colorThemeLight;
-    // TODO: add action tables for other layouts
+
+    private ColorTheme mColorThemeDark;
+    private ColorTheme mColorThemeLight;
+
+    private LayoutBank mLayoutBank;
+    private Layout mCurrentLayout;
+    private int mCurrentLayoutDuration;
+
+    private int mShiftState;
 
     /**
      * Main initialization of the input method component.  Be sure to call
@@ -29,20 +34,27 @@ public class StrokeIME extends InputMethodService implements InputEventListener
         super.onCreate();
 
         Resources r = getResources();
-        colorThemeDark = new ColorTheme(
+        mColorThemeDark = new ColorTheme(
                 r.getColor(R.color.dark_bg),
                 r.getColor(R.color.dark_fg),
                 r.getColor(R.color.dark_txt),
                 r.getColor(R.color.dark_txt_hot),
                 r.getColor(R.color.dark_txt_back)
                 );
-        colorThemeLight = new ColorTheme(
+        mColorThemeLight = new ColorTheme(
                 r.getColor(R.color.light_bg),
                 r.getColor(R.color.light_fg),
                 r.getColor(R.color.light_txt),
                 r.getColor(R.color.light_txt_hot),
                 r.getColor(R.color.light_txt_back)
                 );
+
+        mLayoutBank = new LayoutBank();
+
+        mCurrentLayout = mLayoutBank.defaultLayout;
+        mCurrentLayoutDuration = LayoutBank.DURATION_FOREVER;
+
+        mShiftState = Layout.SHIFT_OFF;
     }
     
     /**
@@ -58,9 +70,6 @@ public class StrokeIME extends InputMethodService implements InputEventListener
             if (displayWidth == mLastDisplayWidth) return;
             mLastDisplayWidth = displayWidth;
         }*/
-        if (mLayoutLat == null) {
-            mLayoutLat = new LayoutLat();
-        }
     }
 
     /**
@@ -71,10 +80,12 @@ public class StrokeIME extends InputMethodService implements InputEventListener
      */
     @Override public View onCreateInputView() {
         mInputView = new InputView(this);
-
-        mInputView.setColorTheme(colorThemeDark);
         mInputView.setInputEventListener(this);
-        mInputView.setLayout(mLayoutLat, Layout.SHIFT_DOWN);
+
+        // TODO: set prefered color theme
+        mInputView.setColorTheme(mColorThemeDark);
+        mInputView.setLayout(mCurrentLayout, mShiftState);
+
         return mInputView;
     }
 
@@ -84,6 +95,29 @@ public class StrokeIME extends InputMethodService implements InputEventListener
      */
     @Override public View onCreateCandidatesView() {
         return null;
+    }
+
+    private final void processBackspace() {
+
+    }
+
+    private final void processShift() {
+        switch(mShiftState) {
+            case Layout.SHIFT_LOCK:
+                mShiftState = Layout.SHIFT_OFF;
+                break;
+            case Layout.SHIFT_ON:
+                mShiftState = Layout.SHIFT_LOCK;
+                break;
+            case Layout.SHIFT_OFF:
+                mShiftState = Layout.SHIFT_ON;
+                break;
+        }
+        updateView();
+    }
+
+    private final void updateView() {
+        mInputView.setLayout(mCurrentLayout, mShiftState);
     }
 
     public void onInput(InputEvent event) {
@@ -97,18 +131,44 @@ public class StrokeIME extends InputMethodService implements InputEventListener
 
         switch(event.action.actionType) {
             case Action.TYPE_TEXT:
+                // TODO: process shift, process duration
                 c.commitText(event.action.value, 0);
+                if(mShiftState == Layout.SHIFT_ON) {
+                    mShiftState = Layout.SHIFT_OFF;
+                    updateView();
+                }
                 break;
             case Action.TYPE_CODE:
-                if(event.action.keyCode == KeyEvent.KEYCODE_A){
-                    mInputView.setColorTheme(colorThemeLight);
+                // Special case: Shift key was pressed
+                if(event.action.keyCode == KeyEvent.KEYCODE_SHIFT_LEFT ||
+                        event.action.keyCode == KeyEvent.KEYCODE_SHIFT_RIGHT) {
+                    processShift();
+                    break;
                 }
-                c.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SHIFT_LEFT));
-                c.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, event.action.keyCode));
-                c.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, event.action.keyCode));
-                c.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_SHIFT_LEFT));
+
+                // Otherwise, perform some action and release shift if necessary
+                switch(event.action.keyCode) {
+                    case KeyEvent.KEYCODE_A:
+                        // TODO: remove this experimental feature
+                        mInputView.setColorTheme(mColorThemeLight);
+                        break;
+                    // TODO: process enter, tabulation etc manually
+                    default:
+                        c.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, event.action.keyCode));
+                        c.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, event.action.keyCode));
+                        break;
+                }
+
+                if(mShiftState == Layout.SHIFT_ON) {
+                    mShiftState = Layout.SHIFT_OFF;
+                    updateView();
+                }
                 break;
             case Action.TYPE_LAYOUT:
+                // TODO: process duration
+                mCurrentLayout = mLayoutBank.getLayout(event.action.value).layout;
+                mShiftState = Layout.SHIFT_OFF;
+                updateView();
                 break;
         }
     }

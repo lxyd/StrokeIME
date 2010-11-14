@@ -5,18 +5,15 @@ import org.me.strokeime.Layout;
 import org.me.strokeime.gliphs.*;
 import static android.view.KeyEvent.*;
 
-public class LayoutLat extends Layout {
+public class LayoutEn extends Layout {
     @Override
     protected void initialize() {
-        //c(RT, MB, KEYCODE_ENTER, "⏎", "⏎");
-        //c(RT, MT, KEYCODE_DEL, "⇐", "⇐");
-        //c(LT, RT, KEYCODE_TAB, "⇒", "⇒"); 
         c(RT, MB, KEYCODE_ENTER, new GliphEnter(), new GliphEnter());
         c(RT, RT, KEYCODE_DEL, new GliphBackspace(), new GliphBackspace()); 
         s(MT, RT, " ", " ", "", "");
         c(LT, RT, KEYCODE_TAB, new GliphTab(), new GliphTab()); 
 
-        c(LT, LT, KEYCODE_SHIFT_LEFT, new GliphShift(), new GliphShift()); 
+        c(LT, LT, KEYCODE_SHIFT_LEFT, new GliphShift(), new GliphShift(), new GliphShiftLock()); 
 
         s(MC, MC, " ", " ", new GliphSpace(), new GliphSpace());
         s(MC, LT, "a", "A");
