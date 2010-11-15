@@ -13,11 +13,14 @@
             <meta-data android:name="android.view.im" android:resource="@xml/method" />
         </service>
         <activity android:name="StrokeIMESettings"
-                  android:label="@string/ime_settings_label">
+            android:label="@string/ime_settings_label">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <!--category android:name="android.intent.category.LAUNCHER" /-->
             </intent-filter>
         </activity>
     </application>
+
+    <!-- set this to get rid of permissions, forced in older versions -->
+    <uses-sdk android:minSdkVersion="3" android:targetSdkVersion="4" />
 </manifest> 

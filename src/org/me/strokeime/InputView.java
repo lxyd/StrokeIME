@@ -46,7 +46,7 @@ public class InputView extends View {
 
         mStrokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mStrokePaint.setStyle(Paint.Style.STROKE);
-        mStrokePaint.setStrokeWidth(1);
+        mStrokePaint.setStrokeWidth(1.5f);
 
         mTextPaint = new Paint(Paint.SUBPIXEL_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setStyle(Paint.Style.FILL);
