@@ -5,30 +5,65 @@ import org.me.strokeime.Layout;
 import org.me.strokeime.gliphs.*;
 import static android.view.KeyEvent.*;
 
-public class LayoutEn extends Layout {
+public class LayoutEn extends LayoutBase {
     @Override
     protected void initialize() {
-        c(RT, MB, KEYCODE_ENTER, new GliphEnter(), new GliphEnter());
-        c(RT, RT, KEYCODE_DEL, new GliphBackspace(), new GliphBackspace()); 
-        s(MT, RT, " ", " ", "", "");
-        c(LT, RT, KEYCODE_TAB, new GliphTab(), new GliphTab()); 
+        super.initialize();
 
-        c(LT, LT, KEYCODE_SHIFT_LEFT, new GliphShift(), new GliphShift(), new GliphShiftLock()); 
-
-        s(MC, MC, " ", " ", new GliphSpace(), new GliphSpace());
         s(MC, LT, "a", "A");
-        s(MC, MT, "b", "B");
-        s(MC, RT, "c", "C");
-        s(MC, LB, "d", "D");
-        s(MC, MB, "e", "E");
-        s(MC, RB, "f", "F");
-        s(LT, MT, "a", "A");
-        s(LT, MC, "b", "B");
-        s(LT, LB, "c", "C");
-        s(LT, MB, "d", "D");
-        s(LT, RB, "e", "E");
-        l(LT, OT, "num", "?123");
+        s(MC, MT, "o", "O");
+        s(MC, RT, "e", "E");
+        // MC-MC is SPACE
+        s(MC, LB, "u", "U");
+        s(MC, MB, "i", "I");
+        s(MC, RB, "s", "S");
 
-        c(MC, LT, KEYCODE_A, "a", "A");
+        // LT-LT is SHIFT
+        //s(LT, MT, "p", "P");
+        // LT-RT is TAB
+        s(LT, MC, "b", "B");
+        s(LT, LB, "q", "Q");
+        //s(LT, MB, "d", "D");
+        //s(LT, RB, "@", "@");
+
+        s(MT, LT, "j", "J");
+        s(MT, MT, "d", "D");
+        s(MT, RT, "w", "W");
+        s(MT, MC, "p", "P");
+        //s(MT, LB, "i", "I");
+        //s(MT, MB, "j", "J");
+        //s(MT, RB, "k", "K");
+
+        //s(RT, LT, "l", "L");
+        //s(RT, MT, "k", "K");
+        // RT-RT is BACKSPACE
+        s(RT, MC, "k", "K");
+        //s(RT, LB, "?", "?");
+        // RT-MB is ENTER
+        //s(RT, RB, "p", "P");
+
+        //s(LB, LT, "q", "Q");
+        //s(LB, MT, "r", "R");
+        //s(LB, RT, "-", "-");
+        s(LB, MC, "g", "G");
+        s(LB, LB, "h", "H");
+        //s(LB, MB, "g", "G");
+        //s(LB, RB, "w", "W");
+
+        //s(MB, LT, "x", "X");
+        //s(MB, MT, "y", "Y");
+        //s(MB, RT, "z", "Z");
+        s(MB, MC, "m", "M");
+        //s(MB, LB, "_", "_");
+        s(MB, MB, "t", "T");
+        //s(MB, RB, ",", ",");
+
+        //s(RB, LT, "'", "'");
+        //s(RB, MT, "\"", "\"");
+        //s(RB, RT, "/", "/");
+        s(RB, MC, "y", "Y");
+        //s(RB, LB, "(", "(");
+        //s(RB, MB, "m", "M");
+        s(RB, RB, "n", "N");
     }
 }

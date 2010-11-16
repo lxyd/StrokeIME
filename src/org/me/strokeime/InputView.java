@@ -147,11 +147,11 @@ public class InputView extends View {
         float hs = getWidth()/9f;    // horizontal step
         float vs = 1.1f * mTextSize; // vertical step
 
-        float top = 0.1f * mTextSize;
+        float top = 0.02f * mTextSize;
         drawZoneKeys(canvas, LT, 0f,              top, hs, vs);
         drawZoneKeys(canvas, MT, mVerticalLine1X, top, hs, vs);
         drawZoneKeys(canvas, RT, mVerticalLine2X, top, hs, vs);
-        top = h - 3*vs - 0.1f * mTextSize;
+        top = h - 3*vs - 0.2f * mTextSize;
         drawZoneKeys(canvas, LB, 0f,              top, hs, vs);
         drawZoneKeys(canvas, MB, mVerticalLine1X, top, hs, vs);
         drawZoneKeys(canvas, RB, mVerticalLine2X, top, hs, vs);
@@ -209,7 +209,7 @@ public class InputView extends View {
         mCenterAreaRect.right  = 4*w/5.0f;
         mCenterAreaRect.bottom = 2*h/3.0f;
 
-        mHotTextSize = mTextSize = h/10.0f;
+        mHotTextSize = mTextSize = h/11.0f;
         mBackTextSize = h/3.5f;
         mTextPaint.setTextSize(mTextSize);
         mHotTextPaint.setTextSize(mHotTextSize);
