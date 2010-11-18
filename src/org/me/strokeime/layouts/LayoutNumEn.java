@@ -11,5 +11,6 @@ public class LayoutNumEn extends LayoutNum {
         super.initialize();
 
         l(LT, OT, "en", "ABC");
+        l(MT, OT, "spec", "êґå");
     }
 }

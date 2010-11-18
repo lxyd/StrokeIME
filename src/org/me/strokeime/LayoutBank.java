@@ -5,31 +5,19 @@ import java.util.Hashtable;
 import org.me.strokeime.layouts.*;
 
 public class LayoutBank {
-    public static final int DURATION_FOREVER = 0;
-    public static final int DURATION_CHAR = 1;
-    public static final int DURATION_WORD = 2;
-
-    public static class LayoutItem {
-        public final Layout layout;
-        public final int duration;
-        private LayoutItem(Layout layout, int duration) {
-            this.layout = layout;
-            this.duration = duration;
-        }
-    }
-
-    private final Hashtable<String, LayoutItem> bank = new Hashtable<String, LayoutItem>();
+    private final Hashtable<String, Layout> bank = new Hashtable<String, Layout>();
     public final Layout defaultLayout;
 
-    public LayoutItem getLayout(String name) {
+    public Layout getLayout(String name) {
         return bank.get(name);
     }
 
     public LayoutBank() {
         defaultLayout = new LayoutEn();
-        bank.put("en", new LayoutItem(defaultLayout, DURATION_FOREVER));
-        bank.put("num-en", new LayoutItem(new LayoutNumEn(), DURATION_WORD));
-        bank.put("num-ru", new LayoutItem(new LayoutNumRu(), DURATION_WORD));
-        bank.put("ru", new LayoutItem(new LayoutRu(), DURATION_FOREVER));
+        bank.put("en", defaultLayout);
+        bank.put("ru", new LayoutRu());
+        bank.put("num-en", new LayoutNumEn());
+        bank.put("num-ru", new LayoutNumRu());
+        bank.put("spec", new LayoutSpec());
     }
 }

@@ -40,10 +40,24 @@ public abstract class Layout {
     protected final Key[][][] map = new Key[3][16][16];
 
     /**
+     * Whether we should return to the previous layout 
+     * after a single char or code entered
+     */
+    protected boolean mIsSingleChar = false;
+
+    /**
      * Get key, associated with the stroke from start to end.
      */
     public final Key getKey(int shiftState, int start, int end) {
         return map[shiftState][start][end];
+    }
+
+    /**
+     * Whether we should return to the previous layout 
+     * after a single char or code entered
+     */
+    public final boolean isSingleChar() {
+        return mIsSingleChar;
     }
 
     /**

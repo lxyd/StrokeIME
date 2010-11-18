@@ -32,7 +32,7 @@ public class LayoutNum extends LayoutBase {
         s(MT, MC, "&", "&");
         s(MT, LB, "/", "/");
         // MT-MB is !
-        s(MT, RB, "~", "\\");
+        s(MT, RB, "\\", "\\");
 
         //s(RT, LT, "", "");
         s(RT, MT, "}", "}");
@@ -47,7 +47,7 @@ public class LayoutNum extends LayoutBase {
         s(LB, RT, "_", "_");
         s(LB, MC, "#", "#");
         s(LB, LB, "9", "9");
-        //s(LB, MB, "", "");
+        s(LB, MB, "~", "~");
         s(LB, RB, "@", "@");
 
         s(MB, LT, "'", "'");

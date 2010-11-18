@@ -11,6 +11,7 @@ public class LayoutEn extends LayoutBase {
         super.initialize();
 
         l(LT, OT, "num-en", "?123");
+        l(MT, OT, "spec", "êґå");
         l(RT, OT, "ru", "RU");
 
         s(MC, LT, "a", "A");
@@ -30,9 +31,9 @@ public class LayoutEn extends LayoutBase {
         s(LT, RB, "(", "(");
 
         s(MT, LT, "j", "J");
-        s(MT, MT, "d", "D");
+        s(MT, MT, "p", "P");
         s(MT, RT, "w", "W");
-        s(MT, MC, "p", "P");
+        s(MT, MC, "d", "D");
         s(MT, LB, "/", "/");
         // MT-MB is !
         s(MT, RB, "\\", "\\");

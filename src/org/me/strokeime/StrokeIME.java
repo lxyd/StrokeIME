@@ -12,8 +12,8 @@ import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-public class StrokeIME extends InputMethodService implements InputEventListener
-{
+public class StrokeIME extends InputMethodService implements InputEventListener {
+
     private InputView mInputView;
     private int mLastDisplayWidth;
 
@@ -22,13 +22,12 @@ public class StrokeIME extends InputMethodService implements InputEventListener
 
     private LayoutBank mLayoutBank;
     private Layout mCurrentLayout;
-    private int mCurrentLayoutDuration;
+    private Layout mPreviousLayout;
 
     private int mShiftState;
 
     // _ - not a word separator
-    private String mWordSeparators = " \t`~!@#$%^&*()+-=[]{}|\\;:'\"<>,./?";
-
+    private String mWordSeparators = " \t\n\r`~!@#$%^&*()+-=[]{}|\\;:'\"<>,./?";
 
     /**
      * Main initialization of the input method component.  Be sure to call
@@ -56,7 +55,7 @@ public class StrokeIME extends InputMethodService implements InputEventListener
         mLayoutBank = new LayoutBank();
 
         mCurrentLayout = mLayoutBank.defaultLayout;
-        mCurrentLayoutDuration = LayoutBank.DURATION_FOREVER;
+        mPreviousLayout = null;
 
         mShiftState = Layout.SHIFT_OFF;
     }
@@ -101,8 +100,8 @@ public class StrokeIME extends InputMethodService implements InputEventListener
         return null;
     }
 
-    private final void processBackspace() {
-
+    private final void updateView() {
+        mInputView.setLayout(mCurrentLayout, mShiftState);
     }
 
     private final void processShift() {
@@ -120,11 +119,7 @@ public class StrokeIME extends InputMethodService implements InputEventListener
         updateView();
     }
 
-    private final void updateView() {
-        mInputView.setLayout(mCurrentLayout, mShiftState);
-    }
-
-    private void deleteWord(InputConnection c) {
+    private final void deleteWord(InputConnection c) {
         int cnt = 0;
         CharSequence t;
         while((t = c.getTextBeforeCursor(cnt+1, 0)).length() == cnt+1
@@ -140,15 +135,20 @@ public class StrokeIME extends InputMethodService implements InputEventListener
         }
     }
 
-    public void onInput(InputEvent event) {
+    public final void onInput(InputEvent event) {
         InputConnection c = getCurrentInputConnection();
         
         if(event.action == null)
             return;
 
+        if(mCurrentLayout.isSingleChar() && mPreviousLayout != null) {
+            mCurrentLayout = mPreviousLayout;
+            mPreviousLayout = null;
+            updateView();
+        }
+
         switch(event.action.actionType) {
             case Action.TYPE_TEXT:
-                // TODO: process duration
                 c.commitText(event.action.value, 0);
                 if(mShiftState == Layout.SHIFT_ON) {
                     mShiftState = Layout.SHIFT_OFF;
@@ -163,14 +163,14 @@ public class StrokeIME extends InputMethodService implements InputEventListener
                     break;
                 }
 
-                // Otherwise, perform some action and release shift if necessary
+                // Otherwise, perform some action AND release shift if necessary
                 switch(event.action.keyCode) {
                     case Layout.KEYCODE_DEL_WORD:
                         deleteWord(c);
                         break;
                     default:
                         c.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, event.action.keyCode));
-                        c.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, event.action.keyCode));
+                        c.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP,   event.action.keyCode));
                         break;
                 }
 
@@ -180,9 +180,11 @@ public class StrokeIME extends InputMethodService implements InputEventListener
                 }
                 break;
             case Action.TYPE_LAYOUT:
-                // TODO: process duration
-                mCurrentLayout = mLayoutBank.getLayout(event.action.value).layout;
-                mShiftState = Layout.SHIFT_OFF;
+                mPreviousLayout = mCurrentLayout;
+                mCurrentLayout = mLayoutBank.getLayout(event.action.value);
+
+                if(!mCurrentLayout.isSingleChar())
+                    mShiftState = Layout.SHIFT_OFF;
                 updateView();
                 break;
         }

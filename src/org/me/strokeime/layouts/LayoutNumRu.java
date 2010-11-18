@@ -11,5 +11,6 @@ public class LayoutNumRu extends LayoutNum {
         super.initialize();
 
         l(LT, OT, "ru", "АБВ");
+        l(MT, OT, "spec", "êґå");
     }
 }

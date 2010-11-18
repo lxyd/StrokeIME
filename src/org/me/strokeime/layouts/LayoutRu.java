@@ -11,6 +11,7 @@ public class LayoutRu extends LayoutBase {
         super.initialize();
 
         l(LT, OT, "num-ru", "?123");
+        l(MT, OT, "spec", "êґå");
         l(RT, OT, "en", "EN");
 
         s(MC, LT, "а", "А");
@@ -30,9 +31,9 @@ public class LayoutRu extends LayoutBase {
         s(LT, RB, "(", "(");
 
         s(MT, LT, "ж", "Ж");
-        s(MT, MT, "д", "Д");
+        s(MT, MT, "п", "П");
         s(MT, RT, "ш", "Ш");
-        s(MT, MC, "п", "П");
+        s(MT, MC, "д", "Д");
         s(MT, LB, "ы", "Ы");
         // MT-MB is !
         s(MT, RB, "э", "Э");

@@ -195,7 +195,7 @@ public class InputView extends View {
     protected void onMeasure (int widthMeasureSpec, int heightMeasureSpec) {
         int w = MeasureSpec.getSize(widthMeasureSpec);
         int h = MeasureSpec.getSize(heightMeasureSpec);
-        h = (int)(1.2f*Math.min(w, h)/2);
+        h = (int)(1.1f*Math.min(w, h)/2);
         setMeasuredDimension(w, h);
     }
 
