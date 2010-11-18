@@ -20,7 +20,7 @@ public class LayoutNum extends LayoutBase {
 
         // LT-LT is SHIFT
         s(LT, MT, "{", "{");
-        // LT-RT is TAB
+        c(LT, RT, KEYCODE_TAB, new GliphTab(), new GliphTab()); 
         s(LT, MC, "%", "%");
         s(LT, LB, "[", "[");
         //s(LT, MB, "", "");

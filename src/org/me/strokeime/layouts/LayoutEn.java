@@ -19,7 +19,7 @@ public class LayoutEn extends LayoutBase {
         // MC-MC is SPACE
         s(MC, LB, "u", "U");
         s(MC, MB, "i", "I");
-        s(MC, RB, "s", "S");
+        s(MC, RB, "h", "H");
 
         // LT-LT is SHIFT
         s(LT, MT, "y", "Y");
@@ -49,7 +49,7 @@ public class LayoutEn extends LayoutBase {
         // LB-MT is -
         s(LB, RT, "_", "_");
         s(LB, MC, "g", "G");
-        s(LB, LB, "h", "H");
+        s(LB, LB, "s", "S");
         s(LB, MB, "r", "R");
         s(LB, RB, "@", "@");
 

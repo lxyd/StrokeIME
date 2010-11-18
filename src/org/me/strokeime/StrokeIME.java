@@ -26,6 +26,10 @@ public class StrokeIME extends InputMethodService implements InputEventListener
 
     private int mShiftState;
 
+    // _ - not a word separator
+    private String mWordSeparators = " \t`~!@#$%^&*()+-=[]{}|\\;:'\"<>,./?";
+
+
     /**
      * Main initialization of the input method component.  Be sure to call
      * to super class.
@@ -120,18 +124,31 @@ public class StrokeIME extends InputMethodService implements InputEventListener
         mInputView.setLayout(mCurrentLayout, mShiftState);
     }
 
+    private void deleteWord(InputConnection c) {
+        int cnt = 0;
+        CharSequence t;
+        while((t = c.getTextBeforeCursor(cnt+1, 0)).length() == cnt+1
+              &&
+              mWordSeparators.indexOf(t.charAt(0)) == -1)
+            cnt++;
+
+        // delete at least one character
+        if(cnt == 0) cnt = 1;
+        for (; cnt > 0; cnt--) {
+            c.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
+            c.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL));
+        }
+    }
+
     public void onInput(InputEvent event) {
-        //android.content.Context context = getApplicationContext();
-        //android.widget.Toast toast = android.widget.Toast.makeText(context, "HELLO!", android.widget.Toast.LENGTH_SHORT);
-        //toast.show();
         InputConnection c = getCurrentInputConnection();
         
         if(event.action == null)
-            return; // TODO: better action
+            return;
 
         switch(event.action.actionType) {
             case Action.TYPE_TEXT:
-                // TODO: process shift, process duration
+                // TODO: process duration
                 c.commitText(event.action.value, 0);
                 if(mShiftState == Layout.SHIFT_ON) {
                     mShiftState = Layout.SHIFT_OFF;
@@ -148,14 +165,9 @@ public class StrokeIME extends InputMethodService implements InputEventListener
 
                 // Otherwise, perform some action and release shift if necessary
                 switch(event.action.keyCode) {
-                    case Layout.KEY_BACKWORD:
-
+                    case Layout.KEYCODE_DEL_WORD:
+                        deleteWord(c);
                         break;
-                    case KeyEvent.KEYCODE_A:
-                        // TODO: remove this experimental feature
-                        mInputView.setColorTheme(mColorThemeLight);
-                        break;
-                    // TODO: process enter, tabulation etc manually
                     default:
                         c.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, event.action.keyCode));
                         c.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, event.action.keyCode));

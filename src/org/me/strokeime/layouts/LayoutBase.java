@@ -9,8 +9,8 @@ public class LayoutBase extends Layout {
     @Override
     protected void initialize() {
         c(RT, MB, KEYCODE_ENTER, new GliphEnter(), new GliphEnter());
-        c(RT, RT, KEYCODE_DEL, new GliphBackspace(), new GliphBackspace()); 
-        c(LT, RT, KEYCODE_TAB, KEY_BACKWORD, new GliphTab(), new GliphBackword()); 
+        // KEYCODE_DEL_WORD is defined in the Layout class, not in KeyEvent
+        c(RT, RT, KEYCODE_DEL, KEYCODE_DEL_WORD, KEYCODE_DEL, new GliphBackspace(), new GliphBackword(), new GliphBackspace()); 
         c(LT, LT, KEYCODE_SHIFT_LEFT, new GliphShift(), new GliphShift(), new GliphShiftLock()); 
 
         s(MC, MC, " ", " ", new GliphSpace(), new GliphSpace());

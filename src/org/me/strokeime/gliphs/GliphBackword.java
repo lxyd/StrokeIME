@@ -32,8 +32,8 @@ public class GliphBackword extends Gliph {
 
         path.moveTo( 0f, 0f);
         path.lineTo( 0f,  h);
-        path.lineTo(  b,  h);
-        path.lineTo(  b, 0f);
+        path.lineTo( -b,  h);
+        path.lineTo( -b, 0f);
         
         path.close();
     }

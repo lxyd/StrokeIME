@@ -19,7 +19,7 @@ public class LayoutRu extends LayoutBase {
         // MC-MC is SPACE
         s(MC, LB, "у", "У");
         s(MC, MB, "и", "И");
-        s(MC, RB, "с", "С");
+        s(MC, RB, "ю", "Ю");
 
         // LT-LT is SHIFT
         s(LT, MT, "я", "Я");
@@ -49,7 +49,7 @@ public class LayoutRu extends LayoutBase {
         // LB-MT is -
         s(LB, RT, "ё", "Ё");
         s(LB, MC, "г", "Г");
-        s(LB, LB, "ю", "Ю");
+        s(LB, LB, "с", "С");
         s(LB, MB, "р", "Р");
         s(LB, RB, "щ", "Щ");
 

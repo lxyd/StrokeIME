@@ -34,6 +34,7 @@ public class GliphBackspace extends Gliph {
     protected final void modifyBounds(RectF bounds) {
         bounds.top -= 10f;
         bounds.bottom += 10f;
+        // to match backword gliph
         bounds.left -= 5f;
     }
 }
