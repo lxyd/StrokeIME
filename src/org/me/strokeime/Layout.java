@@ -20,6 +20,8 @@ public abstract class Layout {
     public static final int OB = 0xC;
     public static final int OL = 0xD;
 
+    public static final int KEY_BACKWORD = -101;
+
     public Layout() {
         initialize();
     }
@@ -102,13 +104,29 @@ public abstract class Layout {
      * 
      * @param start      Start zone
      * @param end        End zone
+     * @param codeLower  Raw keycode when Shift is not pressed
+     * @param codeUpper  Raw keycode when Shift is pressed
+     * @param labelLower Keyboard text for this character when Shift button is not pressed
+     * @param labelLower Keyboard text for this character when Shift button is pressed
+     */
+    protected final void c(int start, int end, int codeLower, int codeUpper, String labelLower, String labelUpper) {
+        map[SHIFT_OFF][start][end] = new Key(Action.createKeyCodeAction(codeLower), labelLower);
+        map[SHIFT_LOCK][start][end] = map[SHIFT_ON][start][end] = new Key(Action.createKeyCodeAction(codeUpper), labelUpper);
+    }
+
+    /**
+     * Register stroke in the map with keycode as the event param.
+     * This is useful for creating Alt and Ctrl aware layouts or registering strokes
+     * for ENTER, SPACE, BACKSPACE and other special characters
+     * 
+     * @param start      Start zone
+     * @param end        End zone
      * @param code       Raw keycode to use with Alt and Ctrl
      * @param labelLower Keyboard text for this character when Shift button is not pressed
      * @param labelLower Keyboard text for this character when Shift button is pressed
      */
     protected final void c(int start, int end, int code, String labelLower, String labelUpper) {
-        map[SHIFT_OFF][start][end] = new Key(Action.createKeyCodeAction(code), labelLower);
-        map[SHIFT_LOCK][start][end] = map[SHIFT_ON][start][end] = new Key(Action.createKeyCodeAction(code), labelUpper);
+        c(start, end, code, code, labelLower, labelUpper);
     }
 
     /**
@@ -139,9 +157,41 @@ public abstract class Layout {
      * @param gliphLock  Keyboard gliph for this character when Shift button is pressed
      */
     protected final void c(int start, int end, int code, Gliph gliphLower, Gliph gliphUpper, Gliph gliphLock) {
-        map[SHIFT_OFF][start][end] = new Key(Action.createKeyCodeAction(code), gliphLower);
-        map[SHIFT_ON][start][end] = new Key(Action.createKeyCodeAction(code), gliphUpper);
-        map[SHIFT_LOCK][start][end] = new Key(Action.createKeyCodeAction(code), gliphLock);
+        c(start, end, code, code, gliphLower, gliphUpper, gliphLock);
+    }
+
+    /**
+     * Register stroke in the map with keycode as the event param.
+     * This is useful for creating Alt and Ctrl aware layouts or registering strokes
+     * for ENTER, SPACE, BACKSPACE and other special characters
+     * 
+     * @param start      Start zone
+     * @param end        End zone
+     * @param codeLower  Raw keycode when shift is not pressed
+     * @param codeUpper  Raw keycode when shift is pressed
+     * @param gliphLower Keyboard gliph for this character when Shift button is not pressed
+     * @param gliphUpper Keyboard gliph for this character when Shift button is pressed
+     */
+    protected final void c(int start, int end, int codeLower, int codeUpper, Gliph gliphLower, Gliph gliphUpper) {
+        c(start, end, codeLower, codeUpper, gliphLower, gliphUpper, gliphUpper);
+    }
+    /**
+     * Register stroke in the map with keycode as the event param.
+     * This is useful for creating Alt and Ctrl aware layouts or registering strokes
+     * for ENTER, SPACE, BACKSPACE and other special characters
+     * 
+     * @param start      Start zone
+     * @param end        End zone
+     * @param codeLower  Raw keycode when shift is not pressed
+     * @param codeUpper  Raw keycode when shift is pressed
+     * @param gliphLower Keyboard gliph for this character when Shift button is not pressed
+     * @param gliphUpper Keyboard gliph for this character when Shift button is pressed
+     * @param gliphLock  Keyboard gliph for this character when Shift button is pressed
+     */
+    protected final void c(int start, int end, int codeLower, int codeUpper, Gliph gliphLower, Gliph gliphUpper, Gliph gliphLock) {
+        map[SHIFT_OFF][start][end] = new Key(Action.createKeyCodeAction(codeLower), gliphLower);
+        map[SHIFT_ON][start][end] = new Key(Action.createKeyCodeAction(codeUpper), gliphUpper);
+        map[SHIFT_LOCK][start][end] = new Key(Action.createKeyCodeAction(codeUpper), gliphLock);
     }
 
     /**

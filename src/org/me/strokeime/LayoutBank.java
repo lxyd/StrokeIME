@@ -28,7 +28,8 @@ public class LayoutBank {
     public LayoutBank() {
         defaultLayout = new LayoutEn();
         bank.put("en", new LayoutItem(defaultLayout, DURATION_FOREVER));
-        bank.put("num", new LayoutItem(new LayoutNum(), DURATION_WORD));
-        // TODO: load all layouts
+        bank.put("num-en", new LayoutItem(new LayoutNumEn(), DURATION_WORD));
+        bank.put("num-ru", new LayoutItem(new LayoutNumRu(), DURATION_WORD));
+        bank.put("ru", new LayoutItem(new LayoutRu(), DURATION_FOREVER));
     }
 }

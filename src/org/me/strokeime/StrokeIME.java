@@ -148,6 +148,9 @@ public class StrokeIME extends InputMethodService implements InputEventListener
 
                 // Otherwise, perform some action and release shift if necessary
                 switch(event.action.keyCode) {
+                    case Layout.KEY_BACKWORD:
+
+                        break;
                     case KeyEvent.KEYCODE_A:
                         // TODO: remove this experimental feature
                         mInputView.setColorTheme(mColorThemeLight);

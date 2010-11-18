@@ -10,6 +10,9 @@ public class LayoutEn extends LayoutBase {
     protected void initialize() {
         super.initialize();
 
+        l(LT, OT, "num-en", "?123");
+        l(RT, OT, "ru", "RU");
+
         s(MC, LT, "a", "A");
         s(MC, MT, "o", "O");
         s(MC, RT, "e", "E");
@@ -19,51 +22,51 @@ public class LayoutEn extends LayoutBase {
         s(MC, RB, "s", "S");
 
         // LT-LT is SHIFT
-        //s(LT, MT, "p", "P");
+        s(LT, MT, "y", "Y");
         // LT-RT is TAB
         s(LT, MC, "b", "B");
         s(LT, LB, "q", "Q");
-        //s(LT, MB, "d", "D");
-        //s(LT, RB, "@", "@");
+        //s(LT, MB, "", "");
+        s(LT, RB, "(", "(");
 
         s(MT, LT, "j", "J");
         s(MT, MT, "d", "D");
         s(MT, RT, "w", "W");
         s(MT, MC, "p", "P");
-        //s(MT, LB, "i", "I");
-        //s(MT, MB, "j", "J");
-        //s(MT, RB, "k", "K");
+        s(MT, LB, "/", "/");
+        // MT-MB is !
+        s(MT, RB, "\\", "\\");
 
-        //s(RT, LT, "l", "L");
-        //s(RT, MT, "k", "K");
+        //s(RT, LT, "", "");
+        s(RT, MT, "v", "V");
         // RT-RT is BACKSPACE
         s(RT, MC, "k", "K");
-        //s(RT, LB, "?", "?");
+        s(RT, LB, ")", ")");
         // RT-MB is ENTER
-        //s(RT, RB, "p", "P");
+        s(RT, RB, "z", "Z");
 
-        //s(LB, LT, "q", "Q");
-        //s(LB, MT, "r", "R");
-        //s(LB, RT, "-", "-");
+        s(LB, LT, "c", "C");
+        // LB-MT is -
+        s(LB, RT, "_", "_");
         s(LB, MC, "g", "G");
         s(LB, LB, "h", "H");
-        //s(LB, MB, "g", "G");
-        //s(LB, RB, "w", "W");
+        s(LB, MB, "r", "R");
+        s(LB, RB, "@", "@");
 
-        //s(MB, LT, "x", "X");
-        //s(MB, MT, "y", "Y");
-        //s(MB, RT, "z", "Z");
+        s(MB, LT, "'", "'");
+        // MB-MT is ?
+        s(MB, RT, "\"", "\"");
         s(MB, MC, "m", "M");
-        //s(MB, LB, "_", "_");
+        s(MB, LB, "l", "L");
         s(MB, MB, "t", "T");
-        //s(MB, RB, ",", ",");
+        s(MB, RB, "f", "F");
 
-        //s(RB, LT, "'", "'");
-        //s(RB, MT, "\"", "\"");
-        //s(RB, RT, "/", "/");
-        s(RB, MC, "y", "Y");
-        //s(RB, LB, "(", "(");
-        //s(RB, MB, "m", "M");
+        s(RB, LT, ";", ";");
+        s(RB, MT, ":", ":");
+        //RB-RT is ,
+        s(RB, MC, "x", "X");
+        //s(RB, LB, "", "");
+        //RB-MB is .
         s(RB, RB, "n", "N");
     }
 }

@@ -156,7 +156,7 @@ public class InputView extends View {
         drawZoneKeys(canvas, MB, mVerticalLine1X, top, hs, vs);
         drawZoneKeys(canvas, RB, mVerticalLine2X, top, hs, vs);
 
-        top = mCenterAreaRect.top + 0.1f * mTextSize;
+        top = mCenterAreaRect.top + 0.3f * mTextSize;
         drawZoneKeys(canvas, MC, mVerticalLine1X, top, hs, vs*0.8f);
         //org.me.strokeime.gliphs.GliphEnter g = new org.me.strokeime.gliphs.GliphEnter();
         //g.draw(canvas, 200f, 40f, mTextPaint);

@@ -10,8 +10,14 @@ public class LayoutBase extends Layout {
     protected void initialize() {
         c(RT, MB, KEYCODE_ENTER, new GliphEnter(), new GliphEnter());
         c(RT, RT, KEYCODE_DEL, new GliphBackspace(), new GliphBackspace()); 
-        c(LT, RT, KEYCODE_TAB, new GliphTab(), new GliphTab()); 
+        c(LT, RT, KEYCODE_TAB, KEY_BACKWORD, new GliphTab(), new GliphBackword()); 
         c(LT, LT, KEYCODE_SHIFT_LEFT, new GliphShift(), new GliphShift(), new GliphShiftLock()); 
+
         s(MC, MC, " ", " ", new GliphSpace(), new GliphSpace());
+        s(MT, MB, "!", "!");
+        s(MB, MT, "?", "?");
+        s(LB, MT, "-", "-");
+        s(RB, RT, ",", ",");
+        s(RB, MB, ".", ".");
     }
 }

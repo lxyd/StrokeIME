@@ -5,27 +5,65 @@ import org.me.strokeime.Layout;
 import org.me.strokeime.gliphs.*;
 import static android.view.KeyEvent.*;
 
-public class LayoutNum extends Layout {
+public class LayoutNum extends LayoutBase {
     @Override
     protected void initialize() {
-        c(RT, MB, KEYCODE_ENTER, new GliphEnter(), new GliphEnter());
-        c(RT, RT, KEYCODE_DEL, new GliphBackspace(), new GliphBackspace()); 
-        s(MT, RT, " ", " ", "", "");
-        c(LT, RT, KEYCODE_TAB, new GliphTab(), new GliphTab()); 
+        super.initialize();
 
-        c(LT, LT, KEYCODE_SHIFT_LEFT, new GliphShift(), new GliphShift(), new GliphShiftLock());
-
-        s(MC, MC, " ", " ", new GliphSpace(), new GliphSpace());
-        s(MC, LT, "1", "1");
-        s(MC, MT, "2", "2");
-        s(MC, RT, "3", "3");
+        s(MC, LT, "5", "5");
+        s(MC, MT, "0", "0");
+        s(MC, RT, "1", "1");
+        // MC-MC is SPACE
         s(MC, LB, "4", "4");
-        s(MC, MB, "5", "5");
-        s(MC, RB, "6", "6");
-        s(LT, MT, "7", "7");
-        s(LT, MC, "8", "8");
-        s(LT, LB, "9", "9");
-        s(LT, MB, "0", "0");
-        l(LT, OT, "en", "en");
+        s(MC, MB, "3", "3");
+        s(MC, RB, "2", "2");
+
+        // LT-LT is SHIFT
+        s(LT, MT, "{", "{");
+        // LT-RT is TAB
+        s(LT, MC, "%", "%");
+        s(LT, LB, "[", "[");
+        //s(LT, MB, "", "");
+        s(LT, RB, "(", "(");
+
+        s(MT, LT, "<", "<");
+        s(MT, MT, "6", "6");
+        s(MT, RT, ">", ">");
+        s(MT, MC, "&", "&");
+        s(MT, LB, "/", "/");
+        // MT-MB is !
+        s(MT, RB, "~", "\\");
+
+        //s(RT, LT, "", "");
+        s(RT, MT, "}", "}");
+        // RT-RT is BACKSPACE
+        //s(RT, MC, "", "");
+        s(RT, LB, ")", ")");
+        // RT-MB is ENTER
+        s(RT, RB, "]", "]");
+
+        s(LB, LT, "+", "+");
+        // LB-MT is -
+        s(LB, RT, "_", "_");
+        s(LB, MC, "#", "#");
+        s(LB, LB, "9", "9");
+        //s(LB, MB, "", "");
+        s(LB, RB, "@", "@");
+
+        s(MB, LT, "'", "'");
+        // MB-MT is ?
+        s(MB, RT, "\"", "\"");
+        s(MB, MC, "*", "*");
+        s(MB, LB, "^", "^");
+        s(MB, MB, "8", "8");
+        s(MB, RB, "$", "$");
+
+        s(RB, LT, ";", ";");
+        s(RB, MT, ":", ":");
+        //RB-RT is ,
+        s(RB, MC, "=", "=");
+        s(RB, LB, "|", "|");
+        //RB-MB is .
+        s(RB, RB, "7", "7");
     }
 }
