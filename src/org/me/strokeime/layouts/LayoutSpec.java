@@ -36,7 +36,7 @@ public class LayoutSpec extends Layout {
         s(MT, RB, "æ", "Æ");
 
         // Belarusian, Ukrainian
-        s(RT, LT, "§", "§");
+        //s(RT, LT, "", "");
         s(RT, MT, "ї", "Ї");
         s(RT, RT, "і", "І");
         s(RT, MC, "є", "Є");
@@ -46,7 +46,7 @@ public class LayoutSpec extends Layout {
 
         s(LB, LT, "ù", "Ù");
         s(LB, MT, "û", "Û");
-        //s(LB, RT, "", "");
+        s(LB, RT, "§", "§");
         //s(LB, MC, "", "");
         s(LB, LB, "ü", "Ü");
         s(LB, MB, "ú", "Ú");

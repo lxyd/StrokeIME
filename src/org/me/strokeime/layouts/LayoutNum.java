@@ -19,32 +19,32 @@ public class LayoutNum extends LayoutBase {
         s(MC, RB, "2", "2");
 
         // LT-LT is SHIFT
-        s(LT, MT, "{", "{");
+        s(LT, MT, "{", "£");
         c(LT, RT, KEYCODE_TAB, new GliphTab(), new GliphTab()); 
-        s(LT, MC, "%", "%");
-        s(LT, LB, "[", "[");
+        s(LT, MC, "%", "Π");
+        s(LT, LB, "[", "¢");
         //s(LT, MB, "", "");
-        s(LT, RB, "(", "(");
+        s(LT, RB, "(", "€");
 
-        s(MT, LT, "<", "<");
+        s(MT, LT, "<", "÷");
         s(MT, MT, "6", "6");
-        s(MT, RT, ">", ">");
-        s(MT, MC, "&", "&");
-        s(MT, LB, "/", "/");
+        s(MT, RT, ">", "×");
+        s(MT, MC, "*", "•");
+        s(MT, LB, "/", "¶");
         // MT-MB is !
         s(MT, RB, "\\", "\\");
 
         //s(RT, LT, "", "");
-        s(RT, MT, "}", "}");
+        s(RT, MT, "}", "™");
         // RT-RT is BACKSPACE
         //s(RT, MC, "", "");
-        s(RT, LB, ")", ")");
+        s(RT, LB, ")", "®");
         // RT-MB is ENTER
-        s(RT, RB, "]", "]");
+        s(RT, RB, "]", "©");
 
         s(LB, LT, "+", "+");
         // LB-MT is -
-        s(LB, RT, "_", "_");
+        s(LB, RT, "_", "…");
         s(LB, MC, "#", "#");
         s(LB, LB, "9", "9");
         s(LB, MB, "~", "~");
@@ -52,8 +52,8 @@ public class LayoutNum extends LayoutBase {
 
         s(MB, LT, "'", "'");
         // MB-MT is ?
-        s(MB, RT, "\"", "\"");
-        s(MB, MC, "*", "*");
+        s(MB, RT, "\"", "„");
+        s(MB, MC, "&", "°");
         s(MB, LB, "^", "^");
         s(MB, MB, "8", "8");
         s(MB, RB, "$", "$");
@@ -62,7 +62,7 @@ public class LayoutNum extends LayoutBase {
         s(RB, MT, ":", ":");
         //RB-RT is ,
         s(RB, MC, "=", "=");
-        s(RB, LB, "|", "|");
+        s(RB, LB, "|", "√");
         //RB-MB is .
         s(RB, RB, "7", "7");
     }
