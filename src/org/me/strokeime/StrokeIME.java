@@ -120,21 +120,27 @@ public class StrokeIME extends InputMethodService implements InputEventListener 
     }
 
     private final void deleteWord(InputConnection c) {
-        int cnt = 0;
+        int cnt = 0, i = cnt, l;
+
         CharSequence t;
-        while((t = c.getTextBeforeCursor(cnt+1, 0)).length() == cnt+1
-              &&
-              mWordSeparators.indexOf(t.charAt(0)) == -1)
-            cnt++;
+        while(i == cnt) { // while all the characters read are separators
+            cnt += 100;
+            t = c.getTextBeforeCursor(cnt, 0);
+            l = t.length(); // it may differ from cnt
+            for(i = 0; i < l && i < cnt; ++i) {
+                if(mWordSeparators.indexOf(t.charAt(l-1-i)) != -1) {
+                    break;
+                }
+            }
+        }
 
         // delete at least one character
-        if(cnt == 0) cnt = 1;
-        for (; cnt > 0; cnt--) {
-            c.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
-            c.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL));
-        }
+        if(i == 0) i = 1;
+
+        c.deleteSurroundingText(i, 0);
     }
 
+    // TODO: butify
     public final void onInput(InputEvent event) {
         InputConnection c = getCurrentInputConnection();
         
@@ -143,6 +149,7 @@ public class StrokeIME extends InputMethodService implements InputEventListener 
 
         switch(event.action.actionType) {
             case Action.TYPE_TEXT:
+                c.commitText("", 0); // clear selection if any
                 c.commitText(event.action.value, 0);
                 if(mShiftState == Layout.SHIFT_ON) {
                     mShiftState = Layout.SHIFT_OFF;
@@ -154,6 +161,7 @@ public class StrokeIME extends InputMethodService implements InputEventListener 
                 if(event.action.keyCode == KeyEvent.KEYCODE_SHIFT_LEFT ||
                         event.action.keyCode == KeyEvent.KEYCODE_SHIFT_RIGHT) {
                     processShift();
+                    // after this, return
                     return;
                 }
 
@@ -183,7 +191,7 @@ public class StrokeIME extends InputMethodService implements InputEventListener 
                 break;
         }
 
-        // if we didn't just changed to the new layout and layout is singlechar layout, switch to prev
+        // if we didn't just changed to the new layout and layout is singlechar layout, switch to previous layout
         if(event.action.actionType != Action.TYPE_LAYOUT && mCurrentLayout.isSingleChar() && mPreviousLayout != null) {
             mCurrentLayout = mPreviousLayout;
             mPreviousLayout = null;
