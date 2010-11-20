@@ -18,6 +18,7 @@ public class LayoutBank {
         bank.put("ru", new LayoutRu());
         bank.put("num-en", new LayoutNumEn());
         bank.put("num-ru", new LayoutNumRu());
-        bank.put("spec", new LayoutSpec());
+        bank.put("spec-en", new LayoutSpecEn());
+        bank.put("spec-ru", new LayoutSpecRu());
     }
 }

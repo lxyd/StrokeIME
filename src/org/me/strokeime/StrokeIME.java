@@ -141,12 +141,6 @@ public class StrokeIME extends InputMethodService implements InputEventListener 
         if(event.action == null)
             return;
 
-        if(mCurrentLayout.isSingleChar() && mPreviousLayout != null) {
-            mCurrentLayout = mPreviousLayout;
-            mPreviousLayout = null;
-            updateView();
-        }
-
         switch(event.action.actionType) {
             case Action.TYPE_TEXT:
                 c.commitText(event.action.value, 0);
@@ -160,7 +154,7 @@ public class StrokeIME extends InputMethodService implements InputEventListener 
                 if(event.action.keyCode == KeyEvent.KEYCODE_SHIFT_LEFT ||
                         event.action.keyCode == KeyEvent.KEYCODE_SHIFT_RIGHT) {
                     processShift();
-                    break;
+                    return;
                 }
 
                 // Otherwise, perform some action AND release shift if necessary
@@ -187,6 +181,13 @@ public class StrokeIME extends InputMethodService implements InputEventListener 
                     mShiftState = Layout.SHIFT_OFF;
                 updateView();
                 break;
+        }
+
+        // if we didn't just changed to the new layout and layout is singlechar layout, switch to prev
+        if(event.action.actionType != Action.TYPE_LAYOUT && mCurrentLayout.isSingleChar() && mPreviousLayout != null) {
+            mCurrentLayout = mPreviousLayout;
+            mPreviousLayout = null;
+            updateView();
         }
     }
 }

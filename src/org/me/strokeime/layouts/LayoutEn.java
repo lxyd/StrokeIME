@@ -11,7 +11,7 @@ public class LayoutEn extends LayoutBase {
         super.initialize();
 
         l(LT, OT, "num-en", "?123");
-        l(MT, OT, "spec", "êґå");
+        l(MT, OT, "spec-en", "êґå");
         l(RT, OT, "ru", "RU");
 
         s(MC, LT, "a", "A");

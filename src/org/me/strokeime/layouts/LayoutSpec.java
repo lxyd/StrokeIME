@@ -19,13 +19,13 @@ public class LayoutSpec extends Layout {
         s(MC, MB, "ï", "Ï");
         s(MC, RB, "í", "Í");
 
-        s(LT, LT, "è", "È");
+        c(LT, LT, KEYCODE_SHIFT_LEFT, new GliphShift(), new GliphShift(), new GliphShiftLock()); 
         s(LT, MT, "é", "É");
         s(LT, RT, "ê", "Ê");
         s(LT, MC, "ë", "Ë");
         s(LT, LB, "ý", "Ý");
         s(LT, MB, "ÿ", "Ÿ");
-        //s(LT, RB, "", "");
+        s(LT, RB, "è", "È");
 
         s(MT, LT, "à", "À");
         s(MT, MT, "â", "Â");
