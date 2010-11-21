@@ -158,8 +158,6 @@ public class InputView extends View {
 
         top = mCenterAreaRect.top + 0.3f * mTextSize;
         drawZoneKeys(canvas, MC, mVerticalLine1X, top, hs, vs*0.8f);
-        //org.me.strokeime.gliphs.GliphEnter g = new org.me.strokeime.gliphs.GliphEnter();
-        //g.draw(canvas, 200f, 40f, mTextPaint);
     }
 
     private final void drawZoneKeys(Canvas canvas, int zone, float bx, float by, float hs, float vs) {

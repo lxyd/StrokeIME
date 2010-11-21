@@ -23,5 +23,5 @@
 
     <!-- set this to get rid of permissions, forced in older versions -->
     <!--uses-sdk android:minSdkVersion="3" android:targetSdkVersion="4" /-->
-    <uses-sdk android:minSdkVersion="3" />
+    <uses-sdk android:minSdkVersion="3" android:targetSdkVersion="4" />
 </manifest> 
