@@ -1,7 +1,6 @@
 
 package org.me.strokeime;
 
-import org.me.strokeime.layouts.*;
 import android.inputmethodservice.InputMethodService;
 import android.view.inputmethod.InputConnection;
 import android.view.KeyEvent;
@@ -20,14 +19,13 @@ public class StrokeIME extends InputMethodService implements InputEventListener 
     private ColorTheme mColorThemeDark;
     private ColorTheme mColorThemeLight;
 
-    private LayoutBank mLayoutBank;
-    private Layout mCurrentLayout;
-    private Layout mPreviousLayout;
+    private LayoutSwitcher mLayoutSwitcher;
 
     private int mShiftState;
 
     // _ - not a word separator
     private String mWordSeparators = " \t\n\r`~!@#$%^&*()+-=[]{}|\\;:'\"<>,./?";
+    private String mWordSeparatorsForLayoutSwitch = " \t\n\r";
 
     /**
      * Main initialization of the input method component.  Be sure to call
@@ -52,10 +50,7 @@ public class StrokeIME extends InputMethodService implements InputEventListener 
                 r.getColor(R.color.light_txt_back)
                 );
 
-        mLayoutBank = new LayoutBank();
-
-        mCurrentLayout = mLayoutBank.defaultLayout;
-        mPreviousLayout = null;
+        mLayoutSwitcher = new LayoutSwitcher();
 
         mShiftState = Layout.SHIFT_OFF;
     }
@@ -87,7 +82,7 @@ public class StrokeIME extends InputMethodService implements InputEventListener 
 
         // TODO: set prefered color theme
         mInputView.setColorTheme(mColorThemeDark);
-        mInputView.setLayout(mCurrentLayout, mShiftState);
+        updateView();
 
         return mInputView;
     }
@@ -101,7 +96,7 @@ public class StrokeIME extends InputMethodService implements InputEventListener 
     }
 
     private final void updateView() {
-        mInputView.setLayout(mCurrentLayout, mShiftState);
+        mInputView.setLayout(mLayoutSwitcher.getCurrentLayout(), mShiftState);
     }
 
     private final void processShift() {
@@ -140,8 +135,9 @@ public class StrokeIME extends InputMethodService implements InputEventListener 
         c.deleteSurroundingText(i, 0);
     }
 
-    // TODO: butify
+    // TODO: beautify
     public final void onInput(InputEvent event) {
+        boolean wasInput = false;
         InputConnection c = getCurrentInputConnection();
         
         if(event.action == null)
@@ -151,51 +147,49 @@ public class StrokeIME extends InputMethodService implements InputEventListener 
             case Action.TYPE_TEXT:
                 c.commitText("", 0); // clear selection if any
                 c.commitText(event.action.value, 0);
-                if(mShiftState == Layout.SHIFT_ON) {
-                    mShiftState = Layout.SHIFT_OFF;
-                    updateView();
-                }
+                wasInput = true;
                 break;
             case Action.TYPE_CODE:
-                // Special case: Shift key was pressed
-                if(event.action.keyCode == KeyEvent.KEYCODE_SHIFT_LEFT ||
-                        event.action.keyCode == KeyEvent.KEYCODE_SHIFT_RIGHT) {
-                    processShift();
-                    // after this, return
-                    return;
-                }
-
                 // Otherwise, perform some action AND release shift if necessary
-                switch(event.action.keyCode) {
+                switch(event.action.code) {
+                    case KeyEvent.KEYCODE_SHIFT_LEFT:
+                        processShift();
+                        break;
+                    case KeyEvent.KEYCODE_SHIFT_RIGHT:
+                        processShift();
+                        break;
                     case Layout.KEYCODE_DEL_WORD:
+                        wasInput = true;
                         deleteWord(c);
                         break;
                     default:
-                        c.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, event.action.keyCode));
-                        c.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP,   event.action.keyCode));
+                        wasInput = true;
+                        c.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, event.action.code));
+                        c.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_UP,   event.action.code));
                         break;
-                }
-
-                if(mShiftState == Layout.SHIFT_ON) {
-                    mShiftState = Layout.SHIFT_OFF;
-                    updateView();
                 }
                 break;
             case Action.TYPE_LAYOUT:
-                mPreviousLayout = mCurrentLayout;
-                mCurrentLayout = mLayoutBank.getLayout(event.action.value);
-
-                if(!mCurrentLayout.isSingleChar())
-                    mShiftState = Layout.SHIFT_OFF;
+                mLayoutSwitcher.changeLayout(event.action.value);
                 updateView();
                 break;
         }
 
-        // if we didn't just changed to the new layout and layout is singlechar layout, switch to previous layout
-        if(event.action.actionType != Action.TYPE_LAYOUT && mCurrentLayout.isSingleChar() && mPreviousLayout != null) {
-            mCurrentLayout = mPreviousLayout;
-            mPreviousLayout = null;
-            updateView();
+        if(wasInput) {
+            if(mShiftState == Layout.SHIFT_ON) {
+                mShiftState = Layout.SHIFT_OFF;
+                updateView();
+            }
+            if(mLayoutSwitcher.getCurrentLayout().type == Layout.TYPE_SECONDARY_CHAR) {
+                mLayoutSwitcher.backToPrimary();
+                updateView();
+            } else if(mLayoutSwitcher.getCurrentLayout().type == Layout.TYPE_SECONDARY_WORD) {
+                CharSequence s = c.getTextBeforeCursor(1, 0);
+                if(s.length() == 1 && mWordSeparatorsForLayoutSwitch.indexOf(s.charAt(0)) != -1) {
+                    mLayoutSwitcher.backToPrimary();
+                    updateView();
+                }
+            }
         }
     }
 }

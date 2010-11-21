@@ -5,7 +5,7 @@ import org.me.strokeime.Gliph;
 import android.graphics.Path;
 import android.graphics.RectF;
 
-public class GliphBackspace extends Gliph {
+public class GliphDelWord extends Gliph {
     @Override
     protected final void initialize(Path path) {
         float h=60f, w=120f, b=5f;
@@ -28,13 +28,19 @@ public class GliphBackspace extends Gliph {
         path.lineTo(   w-b, h-b);
 
         path.close();
+
+
+        path.moveTo( 0f, 0f);
+        path.lineTo( 0f,  h);
+        path.lineTo( -b,  h);
+        path.lineTo( -b, 0f);
+        
+        path.close();
     }
 
     @Override
     protected final void modifyBounds(RectF bounds) {
         bounds.top -= 10f;
         bounds.bottom += 10f;
-        // to match backword gliph
-        bounds.left -= 5f;
     }
 }

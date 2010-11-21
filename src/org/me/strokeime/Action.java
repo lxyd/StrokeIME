@@ -6,25 +6,37 @@ public class Action {
     public static final int TYPE_CODE   = 1;
     public static final int TYPE_LAYOUT = 2;
 
+    public static final String LAYOUT_NEXT_PRIMARY = "_next_primary";
+    public static final String LAYOUT_PREV_PRIMARY = "_prev_primary";
+    public static final String LAYOUT_BACK_TO_PRIMARY = "_back_to_primary";
+
+    //public static final Action ACTION_SPECIAL_NEXT_PRIMARY_LAYOUT = createSpecialAction(SPECIAL_NEXT_PRIMARY_LAYOUT);
+    //public static final Action ACTION_SPECIAL_PREV_PRIMARY_LAYOUT = createSpecialAction(SPECIAL_PREV_PRIMARY_LAYOUT);
+    //public static final Action ACTION_SPECIAL_BACK_TO_PRIMARY_LAYOUT = createSpecialAction(SPECIAL_BACK_TO_PRIMARY_LAYOUT);
+
     public final int actionType;
     public final String value;
-    public final int keyCode;
+    public final int code;
 
-    private Action(int actionType, String value, int keyCode) {
+    private Action(int actionType, String value, int code) {
         this.actionType = actionType;
         this.value = value;
-        this.keyCode = keyCode;
+        this.code = code;
     }
 
     public static final Action createTextAction(String value) {
         return new Action(TYPE_TEXT, value, -1);
     }
 
-    public static final Action createKeyCodeAction(int keyCode) {
-        return new Action(TYPE_CODE, null, keyCode);
+    public static final Action createKeyCodeAction(int code) {
+        return new Action(TYPE_CODE, null, code);
     }
 
     public static final Action createLayoutAction(String layoutName) {
         return new Action(TYPE_LAYOUT, layoutName, -1);
     }
+
+    /*public static final Action createLayoutSpecialAction(int code) {
+        return new Action(TYPE_LAYOUT, null, code);
+    }*/
 }

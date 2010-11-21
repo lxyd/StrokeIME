@@ -2,68 +2,79 @@
 package org.me.strokeime.layouts;
 
 import org.me.strokeime.Layout;
-import org.me.strokeime.gliphs.*;
+import org.me.strokeime.Action;
+import static org.me.strokeime.GliphBank.*;
 import static android.view.KeyEvent.*;
 
 public class LayoutNum extends LayoutBase {
-    @Override
-    protected void initialize() {
-        super.initialize();
+    @Override protected String getTitle()          { return "Numbers and symbols"; }
+    @Override protected String getName()           { return "num"; }
+    @Override protected String getLabelPrimary()   { return "?123"; }
+    //@Override protected int    getType()           { return TYPE_SECONDARY_WORD; }
+    @Override protected int    getType()           { return TYPE_SECONDARY; }
 
-        s(MC, LT, "5", "5");
-        s(MC, MT, "0", "0");
-        s(MC, RT, "1", "1");
+    @Override
+    protected void initializeLayout() {
+        super.initializeLayout();
+
+        l(LT, OT, Action.LAYOUT_BACK_TO_PRIMARY);
+        //l(RT, OT, Action.LAYOUT_NEXT_PRIMARY);
+        //l(RB, OT, Action.LAYOUT_PREV_PRIMARY);
+
+        t(MC, LT, "5", "5");
+        t(MC, MT, "0", "0");
+        t(MC, RT, "1", "1");
         // MC-MC is SPACE
-        s(MC, LB, "4", "4");
-        s(MC, MB, "3", "3");
-        s(MC, RB, "2", "2");
+        t(MC, LB, "4", "4");
+        t(MC, MB, "3", "3");
+        t(MC, RB, "2", "2");
 
         // LT-LT is SHIFT
-        s(LT, MT, "{", "£");
-        c(LT, RT, KEYCODE_TAB, new GliphTab(), new GliphTab()); 
-        s(LT, MC, "%", "Π");
-        s(LT, LB, "[", "¢");
-        //s(LT, MB, "", "");
-        s(LT, RB, "(", "€");
+        t(LT, MT, "{", "£");
+        c(LT, RT, KEYCODE_TAB, GLIPH_TAB, GLIPH_TAB); 
+        t(LT, MC, "%", "Π");
+        t(LT, LB, "[", "¢");
+        //t(LT, MB, "", "");
+        t(LT, RB, "(", "€");
 
-        s(MT, LT, "<", "÷");
-        s(MT, MT, "6", "6");
-        s(MT, RT, ">", "×");
-        s(MT, MC, "*", "•");
-        s(MT, LB, "/", "¶");
+        t(MT, LT, "<", "÷");
+        t(MT, MT, "6", "6");
+        t(MT, RT, ">", "×");
+        t(MT, MC, "*", "•");
+        t(MT, LB, "/", "¶");
         // MT-MB is !
-        s(MT, RB, "\\", "\\");
+        t(MT, RB, "\\", "\\");
 
-        //s(RT, LT, "", "");
-        s(RT, MT, "}", "™");
+        //t(RT, LT, "", "");
+        t(RT, MT, "}", "™");
         // RT-RT is BACKSPACE
-        //s(RT, MC, "", "");
-        s(RT, LB, ")", "®");
+        //t(RT, MC, "", "");
+        t(RT, LB, ")", "®");
         // RT-MB is ENTER
-        s(RT, RB, "]", "©");
+        t(RT, RB, "]", "©");
 
-        s(LB, LT, "+", "+");
+        t(LB, LT, "+", "+");
         // LB-MT is -
-        s(LB, RT, "_", "…");
-        s(LB, MC, "#", "#");
-        s(LB, LB, "9", "9");
-        s(LB, MB, "~", "~");
-        s(LB, RB, "@", "@");
+        t(LB, RT, "_", "…");
+        t(LB, MC, "#", "#");
+        t(LB, LB, "9", "9");
+        t(LB, MB, "~", "~");
+        t(LB, RB, "@", "@");
 
-        s(MB, LT, "'", "'");
+        t(MB, LT, "'", "'");
         // MB-MT is ?
-        s(MB, RT, "\"", "„");
-        s(MB, MC, "&", "°");
-        s(MB, LB, "^", "^");
-        s(MB, MB, "8", "8");
-        s(MB, RB, "$", "$");
+        t(MB, RT, "\"", "„");
+        t(MB, MC, "&", "°");
+        t(MB, LB, "^", "^");
+        t(MB, MB, "8", "8");
+        t(MB, RB, "$", "$");
 
-        s(RB, LT, ";", ";");
-        s(RB, MT, ":", ":");
+        t(RB, LT, ";", ";");
+        t(RB, MT, ":", ":");
         //RB-RT is ,
-        s(RB, MC, "=", "=");
-        s(RB, LB, "|", "√");
+        t(RB, MC, "=", "=");
+        t(RB, LB, "|", "√");
         //RB-MB is .
-        s(RB, RB, "7", "7");
+        t(RB, RB, "7", "7");
     }
 }

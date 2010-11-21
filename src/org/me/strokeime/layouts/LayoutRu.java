@@ -2,72 +2,83 @@
 package org.me.strokeime.layouts;
 
 import org.me.strokeime.Layout;
-import org.me.strokeime.gliphs.*;
+import org.me.strokeime.Action;
+import static org.me.strokeime.GliphBank.*;
 import static android.view.KeyEvent.*;
 
 public class LayoutRu extends LayoutBase {
+    @Override protected String getTitle()          { return "Русский язык"; }
+    @Override protected String getName()           { return "ru"; }
+    @Override protected String getLabelPrimary()   { return "RU"; }
+    @Override protected String getLabelSecondary() { return "АБВ"; }
+    @Override protected String getLocalesString()  { return "ru_RU";   }
+
     @Override
-    protected void initialize() {
-        super.initialize();
+    protected void initializeLayout() {
+        super.initializeLayout();
 
-        l(LT, OT, "num-ru", "?123");
-        l(MT, OT, "spec-ru", "êґå");
-        l(RT, OT, "en", "EN");
+        //l(LT, OT, "num-ru", "?123");
+        //l(MT, OT, "spec-ru", "êґå");
+        //l(RT, OT, "en", "EN");
+        l(LT, OT, "num");
+        l(MT, OT, "diacritic");
+        l(RT, OT, Action.LAYOUT_NEXT_PRIMARY);
+        l(RB, OT, Action.LAYOUT_PREV_PRIMARY);
 
-        s(MC, LT, "а", "А");
-        s(MC, MT, "о", "О");
-        s(MC, RT, "е", "Е");
+        t(MC, LT, "а", "А");
+        t(MC, MT, "о", "О");
+        t(MC, RT, "е", "Е");
         // MC-MC is SPACE
-        s(MC, LB, "у", "У");
-        s(MC, MB, "и", "И");
-        s(MC, RB, "ю", "Ю");
+        t(MC, LB, "у", "У");
+        t(MC, MB, "и", "И");
+        t(MC, RB, "ю", "Ю");
 
         // LT-LT is SHIFT
-        s(LT, MT, "я", "Я");
+        t(LT, MT, "я", "Я");
         // LT-RT is TAB
-        s(LT, MC, "б", "Б");
-        s(LT, LB, "й", "Й");
-        s(LT, MB, "ч", "Ч");
-        s(LT, RB, "(", "(");
+        t(LT, MC, "б", "Б");
+        t(LT, LB, "й", "Й");
+        t(LT, MB, "ч", "Ч");
+        t(LT, RB, "(", "(");
 
-        s(MT, LT, "ж", "Ж");
-        s(MT, MT, "п", "П");
-        s(MT, RT, "ш", "Ш");
-        s(MT, MC, "д", "Д");
-        s(MT, LB, "ы", "Ы");
+        t(MT, LT, "ж", "Ж");
+        t(MT, MT, "п", "П");
+        t(MT, RT, "ш", "Ш");
+        t(MT, MC, "д", "Д");
+        t(MT, LB, "ы", "Ы");
         // MT-MB is !
-        s(MT, RB, "э", "Э");
+        t(MT, RB, "э", "Э");
 
-        s(RT, LT, "ь", "Ь");
-        s(RT, MT, "в", "В");
+        t(RT, LT, "ь", "Ь");
+        t(RT, MT, "в", "В");
         // RT-RT is BACKSPACE
-        s(RT, MC, "к", "К");
-        s(RT, LB, ")", ")");
+        t(RT, MC, "к", "К");
+        t(RT, LB, ")", ")");
         // RT-MB is ENTER
-        s(RT, RB, "з", "З");
+        t(RT, RB, "з", "З");
 
-        s(LB, LT, "ц", "Ц");
+        t(LB, LT, "ц", "Ц");
         // LB-MT is -
-        s(LB, RT, "ё", "Ё");
-        s(LB, MC, "г", "Г");
-        s(LB, LB, "с", "С");
-        s(LB, MB, "р", "Р");
-        s(LB, RB, "щ", "Щ");
+        t(LB, RT, "ё", "Ё");
+        t(LB, MC, "г", "Г");
+        t(LB, LB, "с", "С");
+        t(LB, MB, "р", "Р");
+        t(LB, RB, "щ", "Щ");
 
-        s(MB, LT, "'", "'");
+        t(MB, LT, "'", "'");
         // MB-MT is ?
-        s(MB, RT, "\"", "\"");
-        s(MB, MC, "м", "М");
-        s(MB, LB, "л", "Л");
-        s(MB, MB, "т", "Т");
-        s(MB, RB, "ф", "Ф");
+        t(MB, RT, "\"", "\"");
+        t(MB, MC, "м", "М");
+        t(MB, LB, "л", "Л");
+        t(MB, MB, "т", "Т");
+        t(MB, RB, "ф", "Ф");
 
-        s(RB, LT, ";", ";");
-        s(RB, MT, ":", ":");
+        t(RB, LT, ";", ";");
+        t(RB, MT, ":", ":");
         //RB-RT is ,
-        s(RB, MC, "х", "Х");
-        s(RB, LB, "ъ", "Ъ");
+        t(RB, MC, "х", "Х");
+        t(RB, LB, "ъ", "Ъ");
         //RB-MB is .
-        s(RB, RB, "н", "Н");
+        t(RB, RB, "н", "Н");
     }
 }

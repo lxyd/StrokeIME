@@ -2,22 +2,22 @@
 package org.me.strokeime.layouts;
 
 import org.me.strokeime.Layout;
-import org.me.strokeime.gliphs.*;
+import static org.me.strokeime.GliphBank.*;
 import static android.view.KeyEvent.*;
 
-public class LayoutBase extends Layout {
+public abstract class LayoutBase extends Layout {
     @Override
-    protected void initialize() {
-        c(RT, MB, KEYCODE_ENTER, new GliphEnter(), new GliphEnter());
+    protected void initializeLayout() {
+        c(RT, MB, KEYCODE_ENTER, GLIPH_ENTER, GLIPH_ENTER);
         // KEYCODE_DEL_WORD is defined in the Layout class, not in KeyEvent
-        c(RT, RT, KEYCODE_DEL, KEYCODE_DEL_WORD, KEYCODE_DEL, new GliphBackspace(), new GliphBackword(), new GliphBackspace()); 
-        c(LT, LT, KEYCODE_SHIFT_LEFT, new GliphShift(), new GliphShift(), new GliphShiftLock()); 
+        c(RT, RT, KEYCODE_DEL, KEYCODE_DEL_WORD, KEYCODE_DEL, GLIPH_DEL, GLIPH_DEL_WORD, GLIPH_DEL); 
+        c(LT, LT, KEYCODE_SHIFT_LEFT, GLIPH_SHIFT, GLIPH_SHIFT, GLIPH_SHIFT_LOCK); 
 
-        s(MC, MC, " ", " ", new GliphSpace(), new GliphSpace());
-        s(MT, MB, "!", "!");
-        s(MB, MT, "?", "?");
-        s(LB, MT, "-", "-");
-        s(RB, RT, ",", ",");
-        s(RB, MB, ".", ".");
+        t(MC, MC, " ", " ", GLIPH_SPACE, GLIPH_SPACE);
+        t(MT, MB, "!", "!");
+        t(MB, MT, "?", "?");
+        t(LB, MT, "-", "-");
+        t(RB, RT, ",", ",");
+        t(RB, MB, ".", ".");
     }
 }

@@ -2,72 +2,82 @@
 package org.me.strokeime.layouts;
 
 import org.me.strokeime.Layout;
-import org.me.strokeime.gliphs.*;
+import org.me.strokeime.Action;
+import static org.me.strokeime.GliphBank.*;
 import static android.view.KeyEvent.*;
 
 public class LayoutEn extends LayoutBase {
+    @Override protected String getTitle()          { return "English"; }
+    @Override protected String getName()           { return "en"; }
+    @Override protected String getLabelPrimary()   { return "EN"; }
+    @Override protected String getLabelSecondary() { return "ABC"; }
+
     @Override
-    protected void initialize() {
-        super.initialize();
+    protected void initializeLayout() {
+        super.initializeLayout();
 
-        l(LT, OT, "num-en", "?123");
-        l(MT, OT, "spec-en", "êґå");
-        l(RT, OT, "ru", "RU");
+        l(LT, OT, "num");
+        l(MT, OT, "diacritic");
+        l(RT, OT, Action.LAYOUT_NEXT_PRIMARY);
+        l(RB, OT, Action.LAYOUT_PREV_PRIMARY);
+        //l(LT, OT, "num-en", "?123");
+        //l(MT, OT, "spec-en", "êґå");
+        //l(RT, OT, "ru", "RU");
 
-        s(MC, LT, "a", "A");
-        s(MC, MT, "o", "O");
-        s(MC, RT, "e", "E");
+        t(MC, LT, "a", "A");
+        t(MC, MT, "o", "O");
+        t(MC, RT, "e", "E");
         // MC-MC is SPACE
-        s(MC, LB, "u", "U");
-        s(MC, MB, "i", "I");
-        s(MC, RB, "h", "H");
+        t(MC, LB, "u", "U");
+        t(MC, MB, "i", "I");
+        t(MC, RB, "h", "H");
 
         // LT-LT is SHIFT
-        s(LT, MT, "y", "Y");
+        t(LT, MT, "y", "Y");
         // LT-RT is TAB
-        s(LT, MC, "b", "B");
-        s(LT, LB, "q", "Q");
-        //s(LT, MB, "", "");
-        s(LT, RB, "(", "(");
+        t(LT, MC, "b", "B");
+        t(LT, LB, "q", "Q");
+        //t(LT, MB, "", "");
+        t(LT, RB, "(", "(");
 
-        s(MT, LT, "j", "J");
-        s(MT, MT, "p", "P");
-        s(MT, RT, "w", "W");
-        s(MT, MC, "d", "D");
-        s(MT, LB, "/", "/");
+        t(MT, LT, "j", "J");
+        t(MT, MT, "p", "P");
+        t(MT, RT, "w", "W");
+        t(MT, MC, "d", "D");
+        t(MT, LB, "/", "/");
         // MT-MB is !
-        s(MT, RB, "\\", "\\");
+        t(MT, RB, "\\", "\\");
 
-        //s(RT, LT, "", "");
-        s(RT, MT, "v", "V");
+        //t(RT, LT, "", "");
+        t(RT, MT, "v", "V");
         // RT-RT is BACKSPACE
-        s(RT, MC, "k", "K");
-        s(RT, LB, ")", ")");
+        t(RT, MC, "k", "K");
+        t(RT, LB, ")", ")");
         // RT-MB is ENTER
-        s(RT, RB, "z", "Z");
+        t(RT, RB, "z", "Z");
 
-        s(LB, LT, "c", "C");
+        t(LB, LT, "c", "C");
         // LB-MT is -
-        s(LB, RT, "_", "_");
-        s(LB, MC, "g", "G");
-        s(LB, LB, "s", "S");
-        s(LB, MB, "r", "R");
-        s(LB, RB, "@", "@");
+        t(LB, RT, "_", "_");
+        t(LB, MC, "g", "G");
+        t(LB, LB, "s", "S");
+        t(LB, MB, "r", "R");
+        t(LB, RB, "@", "@");
 
-        s(MB, LT, "'", "'");
+        t(MB, LT, "'", "'");
         // MB-MT is ?
-        s(MB, RT, "\"", "\"");
-        s(MB, MC, "m", "M");
-        s(MB, LB, "l", "L");
-        s(MB, MB, "t", "T");
-        s(MB, RB, "f", "F");
+        t(MB, RT, "\"", "\"");
+        t(MB, MC, "m", "M");
+        t(MB, LB, "l", "L");
+        t(MB, MB, "t", "T");
+        t(MB, RB, "f", "F");
 
-        s(RB, LT, ";", ";");
-        s(RB, MT, ":", ":");
+        t(RB, LT, ";", ";");
+        t(RB, MT, ":", ":");
         //RB-RT is ,
-        s(RB, MC, "x", "X");
-        //s(RB, LB, "", "");
+        t(RB, MC, "x", "X");
+        //t(RB, LB, "", "");
         //RB-MB is .
-        s(RB, RB, "n", "N");
+        t(RB, RB, "n", "N");
     }
 }
