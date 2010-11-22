@@ -35,7 +35,7 @@ public class LayoutRu extends LayoutBase {
 
         // LT-LT is SHIFT
         t(LT, MT, "я", "Я");
-        // LT-RT is TAB
+        t(LT, RT, "ы", "Ы");
         t(LT, MC, "б", "Б");
         t(LT, LB, "й", "Й");
         t(LT, MB, "ч", "Ч");
@@ -45,7 +45,7 @@ public class LayoutRu extends LayoutBase {
         t(MT, MT, "п", "П");
         t(MT, RT, "ш", "Ш");
         t(MT, MC, "д", "Д");
-        t(MT, LB, "ы", "Ы");
+        t(MT, LB, "/", "/");
         // MT-MB is !
         t(MT, RB, "э", "Э");
 
@@ -58,16 +58,16 @@ public class LayoutRu extends LayoutBase {
         t(RT, RB, "з", "З");
 
         t(LB, LT, "ц", "Ц");
-        // LB-MT is -
+        t(LB, MT, "-", "—", "-");
         t(LB, RT, "ё", "Ё");
         t(LB, MC, "г", "Г");
         t(LB, LB, "с", "С");
         t(LB, MB, "р", "Р");
         t(LB, RB, "щ", "Щ");
 
-        t(MB, LT, "'", "'");
+        t(MB, LT, "«", "'", "«");
         // MB-MT is ?
-        t(MB, RT, "\"", "\"");
+        t(MB, RT, "»", "\"", "»");
         t(MB, MC, "м", "М");
         t(MB, LB, "л", "Л");
         t(MB, MB, "т", "Т");

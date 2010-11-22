@@ -38,7 +38,7 @@ public class InputView extends View {
     private Layout mLayout;
     private int mShiftState;
 
-    private InputEventListener mInputListener = null;
+    private InputEvent.InputEventListener mInputListener = null;
 
     private void createPaints() {
         mFillPaint = new Paint();
@@ -66,7 +66,7 @@ public class InputView extends View {
         createPaints();
     }
 
-    public final void setInputEventListener (InputEventListener listener) {
+    public final void setInputEventListener (InputEvent.InputEventListener listener) {
         mInputListener = listener;
     }
     public final void setLayout (Layout layout, int shiftState){
@@ -83,6 +83,9 @@ public class InputView extends View {
         mTextPaint.setColor(mColorTheme.txt);
         mHotTextPaint.setColor(mColorTheme.txtHot);
         mBackTextPaint.setColor(mColorTheme.txtBack);
+
+        mTextPaint.setFakeBoldText(mColorTheme.isBold);
+        mHotTextPaint.setFakeBoldText(mColorTheme.isBold);
 
         invalidate();
     }

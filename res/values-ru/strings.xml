@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stroke_ime_settings">Настройки StrokeIME</string>
+    <string name="color_theme_light">Светлая цветовая схема</string>
+</resources>

@@ -34,10 +34,10 @@ public class LayoutEn extends LayoutBase {
 
         // LT-LT is SHIFT
         t(LT, MT, "y", "Y");
-        // LT-RT is TAB
+        t(LT, RT, "[", "[");
         t(LT, MC, "b", "B");
         t(LT, LB, "q", "Q");
-        //t(LT, MB, "", "");
+        t(LT, MB, "–", "–");
         t(LT, RB, "(", "(");
 
         t(MT, LT, "j", "J");
@@ -48,7 +48,7 @@ public class LayoutEn extends LayoutBase {
         // MT-MB is !
         t(MT, RB, "\\", "\\");
 
-        //t(RT, LT, "", "");
+        t(RT, LT, "]", "]");
         t(RT, MT, "v", "V");
         // RT-RT is BACKSPACE
         t(RT, MC, "k", "K");
@@ -57,16 +57,16 @@ public class LayoutEn extends LayoutBase {
         t(RT, RB, "z", "Z");
 
         t(LB, LT, "c", "C");
-        // LB-MT is -
+        t(LB, MT, "-", "—", "-");
         t(LB, RT, "_", "_");
         t(LB, MC, "g", "G");
         t(LB, LB, "s", "S");
         t(LB, MB, "r", "R");
         t(LB, RB, "@", "@");
 
-        t(MB, LT, "'", "'");
+        t(MB, LT, "'", "“", "'");
         // MB-MT is ?
-        t(MB, RT, "\"", "\"");
+        t(MB, RT, "\"", "”", "\"");
         t(MB, MC, "m", "M");
         t(MB, LB, "l", "L");
         t(MB, MB, "t", "T");

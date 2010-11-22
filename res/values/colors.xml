@@ -6,9 +6,9 @@
     <color name="dark_txt_hot">#FFF4F4F4</color>
     <color name="dark_txt_back">#FF1A1A1A</color>
 
-    <color name="light_bg">#FFFCFCFC</color>
+    <color name="light_bg">#FFE4E4E4</color>
     <color name="light_fg">#FF545454</color>
     <color name="light_txt">#FF545454</color>
     <color name="light_txt_hot">#FF990404</color>
-    <color name="light_txt_back">#FFEAEAEA</color>
+    <color name="light_txt_back">#FFDADADA</color>
 </resources>

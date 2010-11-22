@@ -6,18 +6,27 @@ import android.view.inputmethod.InputConnection;
 import android.view.KeyEvent;
 import android.view.View;
 import android.content.res.Resources;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-public class StrokeIME extends InputMethodService implements InputEventListener {
+public class StrokeIME
+       extends InputMethodService 
+       implements InputEvent.InputEventListener,
+                  SharedPreferences.OnSharedPreferenceChangeListener {
+
+    public static final String PREFS_TAG = "stroke_ime_settings";
+    public static final String PREFSKEY_COLOR_THEME_LIGHT = "color_theme_light";
 
     private InputView mInputView;
     private int mLastDisplayWidth;
 
     private ColorTheme mColorThemeDark;
     private ColorTheme mColorThemeLight;
+    private ColorTheme mColorThemeCurrent;
 
     private LayoutSwitcher mLayoutSwitcher;
 
@@ -34,27 +43,34 @@ public class StrokeIME extends InputMethodService implements InputEventListener 
     @Override public void onCreate() {
         super.onCreate();
 
-        Resources r = getResources();
+        final SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        final Resources r = getResources();
+
+        settings.registerOnSharedPreferenceChangeListener(this);
+
         mColorThemeDark = new ColorTheme(
                 r.getColor(R.color.dark_bg),
                 r.getColor(R.color.dark_fg),
                 r.getColor(R.color.dark_txt),
                 r.getColor(R.color.dark_txt_hot),
-                r.getColor(R.color.dark_txt_back)
+                r.getColor(R.color.dark_txt_back),
+                r.getBoolean(R.bool.dark_is_bold)
                 );
         mColorThemeLight = new ColorTheme(
                 r.getColor(R.color.light_bg),
                 r.getColor(R.color.light_fg),
                 r.getColor(R.color.light_txt),
                 r.getColor(R.color.light_txt_hot),
-                r.getColor(R.color.light_txt_back)
+                r.getColor(R.color.light_txt_back),
+                r.getBoolean(R.bool.light_is_bold)
                 );
 
-        mLayoutSwitcher = new LayoutSwitcher();
+        mColorThemeCurrent = settings.getBoolean(PREFSKEY_COLOR_THEME_LIGHT, false) ? mColorThemeLight : mColorThemeDark;
 
+        mLayoutSwitcher = new LayoutSwitcher();
         mShiftState = Layout.SHIFT_OFF;
     }
-    
+
     /**
      * This is the point where you can do all of your UI initialization.  It
      * is called after creation and any configuration change.
@@ -80,9 +96,8 @@ public class StrokeIME extends InputMethodService implements InputEventListener 
         mInputView = new InputView(this);
         mInputView.setInputEventListener(this);
 
-        // TODO: set prefered color theme
-        mInputView.setColorTheme(mColorThemeDark);
-        updateView();
+        updateViewColorTheme();
+        updateViewLayout();
 
         return mInputView;
     }
@@ -95,8 +110,13 @@ public class StrokeIME extends InputMethodService implements InputEventListener 
         return null;
     }
 
-    private final void updateView() {
+    private final void updateViewLayout() {
+        if(mInputView == null) return;
         mInputView.setLayout(mLayoutSwitcher.getCurrentLayout(), mShiftState);
+    }
+    private final void updateViewColorTheme() {
+        if(mInputView == null) return;
+        mInputView.setColorTheme(mColorThemeCurrent);
     }
 
     private final void processShift() {
@@ -111,7 +131,7 @@ public class StrokeIME extends InputMethodService implements InputEventListener 
                 mShiftState = Layout.SHIFT_ON;
                 break;
         }
-        updateView();
+        updateViewLayout();
     }
 
     private final void deleteWord(InputConnection c) {
@@ -135,7 +155,7 @@ public class StrokeIME extends InputMethodService implements InputEventListener 
         c.deleteSurroundingText(i, 0);
     }
 
-    // TODO: beautify
+    @Override
     public final void onInput(InputEvent event) {
         boolean wasInput = false;
         InputConnection c = getCurrentInputConnection();
@@ -171,25 +191,34 @@ public class StrokeIME extends InputMethodService implements InputEventListener 
                 break;
             case Action.TYPE_LAYOUT:
                 mLayoutSwitcher.changeLayout(event.action.value);
-                updateView();
+                updateViewLayout();
                 break;
         }
 
         if(wasInput) {
             if(mShiftState == Layout.SHIFT_ON) {
                 mShiftState = Layout.SHIFT_OFF;
-                updateView();
+                updateViewLayout();
             }
             if(mLayoutSwitcher.getCurrentLayout().type == Layout.TYPE_SECONDARY_CHAR) {
                 mLayoutSwitcher.backToPrimary();
-                updateView();
+                updateViewLayout();
             } else if(mLayoutSwitcher.getCurrentLayout().type == Layout.TYPE_SECONDARY_WORD) {
                 CharSequence s = c.getTextBeforeCursor(1, 0);
                 if(s.length() == 1 && mWordSeparatorsForLayoutSwitch.indexOf(s.charAt(0)) != -1) {
                     mLayoutSwitcher.backToPrimary();
-                    updateView();
+                    updateViewLayout();
                 }
             }
         }
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences settings, String key) {
+        if(key.equals(PREFSKEY_COLOR_THEME_LIGHT)) {
+            mColorThemeCurrent = settings.getBoolean(PREFSKEY_COLOR_THEME_LIGHT, false) ? mColorThemeLight : mColorThemeDark;
+            updateViewColorTheme();
+        }
+        // TODO: handle layout settings
     }
 }

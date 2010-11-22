@@ -172,6 +172,20 @@ public abstract class Layout {
 
     /**
      * Register usual text/char stroke in the map.
+     * Lower and Upper labels for this stroke will be set equal to the characters themselves
+     * 
+     * @param start Start zone
+     * @param end   End zone
+     * @param lower Character (may be, string) to type when Shift button is not pressed
+     * @param upper Character (may be, string) to type when Shift button is pressed
+     * @param lock  Character (may be, string) to type when Shift button is locked
+     */
+    protected final void t(int start, int end, String lower, String upper, String lock) {
+        t(start, end, lower, upper, lock, lower, upper, lock);
+    }
+
+    /**
+     * Register usual text/char stroke in the map.
      * 
      * @param start      Start zone
      * @param end        End zone
@@ -192,12 +206,48 @@ public abstract class Layout {
      * @param end        End zone
      * @param lower      Character (may be, string) to type when Shift button is not pressed
      * @param upper      Character (may be, string) to type when Shift button is pressed
+     * @param lock       Character (may be, string) to type when Shift button is locked
+     * @param labelLower Keyboard text for this character when Shift button is not pressed
+     * @param labelUpper Keyboard text for this character when Shift button is pressed
+     * @param labelLock  Keyboard text for this character when Shift button is locked
+     */
+    protected final void t(int start, int end, String lower, String upper, String lock, String labelLower, String labelUpper, String labelLock) {
+        map[SHIFT_OFF][start][end] = new Key(Action.createTextAction(lower), labelLower);
+        map[SHIFT_ON][start][end] = new Key(Action.createTextAction(upper), labelUpper);
+        map[SHIFT_LOCK][start][end] = new Key(Action.createTextAction(lock), labelLock);
+    }
+
+    /**
+     * Register usual text/char stroke in the map.
+     * 
+     * @param start      Start zone
+     * @param end        End zone
+     * @param lower      Character (may be, string) to type when Shift button is not pressed
+     * @param upper      Character (may be, string) to type when Shift button is pressed
      * @param gliphLower Keyboard gliph for this character when Shift button is not pressed
      * @param gliphUpper Keyboard gliph for this character when Shift button is pressed
      */
     protected final void t(int start, int end, String lower, String upper, Gliph gliphLower, Gliph gliphUpper) {
         map[SHIFT_OFF][start][end] = new Key(Action.createTextAction(lower), gliphLower);
         map[SHIFT_LOCK][start][end] = map[SHIFT_ON][start][end] = new Key(Action.createTextAction(upper), gliphUpper);
+    }
+
+    /**
+     * Register usual text/char stroke in the map.
+     * 
+     * @param start      Start zone
+     * @param end        End zone
+     * @param lower      Character (may be, string) to type when Shift button is not pressed
+     * @param upper      Character (may be, string) to type when Shift button is pressed
+     * @param lock       Character (may be, string) to type when Shift button is locked
+     * @param gliphLower Keyboard gliph for this character when Shift button is not pressed
+     * @param gliphUpper Keyboard gliph for this character when Shift button is pressed
+     * @param gliphLock  Keyboard gliph for this character when Shift button is locked
+     */
+    protected final void t(int start, int end, String lower, String upper, String lock, Gliph gliphLower, Gliph gliphUpper, Gliph gliphLock) {
+        map[SHIFT_OFF][start][end] = new Key(Action.createTextAction(lower), gliphLower);
+        map[SHIFT_ON][start][end] = new Key(Action.createTextAction(upper), gliphUpper);
+        map[SHIFT_LOCK][start][end] = new Key(Action.createTextAction(lock), gliphLock);
     }
 
     /**

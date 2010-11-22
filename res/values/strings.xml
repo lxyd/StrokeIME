@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ime_label">StrokeIME</string>
-    <string name="ime_settings_label">StrokeIMESettings</string>
+    <string name="stroke_ime_label">StrokeIME</string>
+    <string name="stroke_ime_settings">StrokeIME Settings</string>
+    <string name="color_theme_light">Use light color theme</string>
 </resources>

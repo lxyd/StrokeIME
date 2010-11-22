@@ -30,11 +30,11 @@ public class LayoutNum extends LayoutBase {
         t(MC, RB, "2", "2");
 
         // LT-LT is SHIFT
-        t(LT, MT, "{", "£");
-        c(LT, RT, KEYCODE_TAB, GLIPH_TAB, GLIPH_TAB); 
-        t(LT, MC, "%", "Π");
-        t(LT, LB, "[", "¢");
-        //t(LT, MB, "", "");
+        c(LT, MT, KEYCODE_TAB, GLIPH_TAB, GLIPH_TAB); 
+        t(LT, RT, "[", "£");
+        t(LT, MC, "%", "%");
+        t(LT, LB, "{", "¢");
+        t(LT, MB, "°", "Π");
         t(LT, RB, "(", "€");
 
         t(MT, LT, "<", "÷");
@@ -45,13 +45,13 @@ public class LayoutNum extends LayoutBase {
         // MT-MB is !
         t(MT, RB, "\\", "\\");
 
-        //t(RT, LT, "", "");
-        t(RT, MT, "}", "™");
+        t(RT, LT, "]", "™");
+        t(RT, MT, "№", "№");
         // RT-RT is BACKSPACE
         //t(RT, MC, "", "");
         t(RT, LB, ")", "®");
         // RT-MB is ENTER
-        t(RT, RB, "]", "©");
+        t(RT, RB, "}", "©");
 
         t(LB, LT, "+", "+");
         // LB-MT is -
@@ -61,10 +61,10 @@ public class LayoutNum extends LayoutBase {
         t(LB, MB, "~", "~");
         t(LB, RB, "@", "@");
 
-        t(MB, LT, "'", "'");
+        t(MB, LT, "'", "`");
         // MB-MT is ?
         t(MB, RT, "\"", "„");
-        t(MB, MC, "&", "°");
+        t(MB, MC, "&", "&");
         t(MB, LB, "^", "^");
         t(MB, MB, "8", "8");
         t(MB, RB, "$", "$");

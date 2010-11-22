@@ -3,9 +3,9 @@
       package="org.me.strokeime"
       android:versionCode="1"
       android:versionName="1.0">
-    <application android:label="@string/ime_label" android:icon="@drawable/icon">
+    <application android:label="@string/stroke_ime_label" android:icon="@drawable/icon">
         <service android:name="StrokeIME"
-            android:label="@string/ime_label"
+            android:label="@string/stroke_ime_label"
             android:permission="android.permission.BIND_INPUT_METHOD">
             <intent-filter>
                 <action android:name="android.view.InputMethod" />
@@ -13,7 +13,7 @@
             <meta-data android:name="android.view.im" android:resource="@xml/method" />
         </service>
         <activity android:name="StrokeIMESettings"
-            android:label="@string/ime_settings_label">
+            android:label="@string/stroke_ime_settings">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <!--category android:name="android.intent.category.LAUNCHER" /-->
