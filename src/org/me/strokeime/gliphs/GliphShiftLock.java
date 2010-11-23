@@ -6,10 +6,14 @@ import android.graphics.Path;
 import android.graphics.RectF;
 
 public class GliphShiftLock extends Gliph {
+    private static final float WEIGHT_NORMAL = 5f;
+    private static final float WEIGHT_BOLD   = 10f;
+
     @Override
-    protected final void initialize(Path path) {
-        float h=80f, w=20f, b=5f;
-        float b2 = b*(float)Math.sqrt(2f),
+    protected final void initialize(Path path, boolean bold) {
+        float h=80f, w=20f;
+        float b = bold ? WEIGHT_BOLD : WEIGHT_NORMAL;
+        float c = bold ? WEIGHT_BOLD-2 : WEIGHT_NORMAL; float b2 = b*(float)Math.sqrt(2f),
               b3 = b+b2;
 
         path.moveTo(w, 0f);
@@ -19,11 +23,13 @@ public class GliphShiftLock extends Gliph {
         path.lineTo(  -w,   0f);
         path.lineTo(   w,   0f);
 
-        path.lineTo( w-b,    b);
-        path.lineTo(-w+b,    b);
-        path.lineTo(-w+b,  w-b);
-        path.lineTo( w-b,  w-b);
-        path.lineTo( w-b,    b);
+        path.close();
+
+        path.moveTo( w-c,    c);
+        path.lineTo(-w+c,    c);
+        path.lineTo(-w+c,  w-c);
+        path.lineTo( w-c,  w-c);
+        path.lineTo( w-c,    c);
 
         path.close();
 
@@ -37,7 +43,9 @@ public class GliphShiftLock extends Gliph {
         path.lineTo(  -w, -w/2);
         path.lineTo(   w, -w/2);
 
-        path.lineTo(    w-b,  -w/2-b);
+        path.close();
+
+        path.moveTo(    w-b,  -w/2-b);
         path.lineTo(   -w+b,  -w/2-b);
         path.lineTo(   -w+b,    -w-b);
         path.lineTo(-2*w+b3,    -w-b);
@@ -48,11 +56,11 @@ public class GliphShiftLock extends Gliph {
 
         path.close();
 
-        path.addCircle(-2*w+2*b, -3*w+2*b, 2*b, Path.Direction.CW);
+        path.addCircle(-2*w+2*WEIGHT_NORMAL, -3*w+2*WEIGHT_NORMAL, 2*WEIGHT_NORMAL, Path.Direction.CW);
     }
 
     @Override
-    protected final void modifyBounds(RectF bounds) {
+    protected final void modifyBounds(RectF bounds, boolean bold) {
         bounds.top -= 10f;
     }
 }
