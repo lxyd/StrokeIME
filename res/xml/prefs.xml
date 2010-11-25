@@ -4,11 +4,11 @@
         android:title="@string/stroke_ime_settings"
         android:key="stroke_ime_settings">
 
-    <PreferenceScreen
+    <Preference
+        android:title="@string/about_preference_title"
         android:key="about_preference"
-        android:title="@string/about_preference_title">
-        <intent android:action="org.me.strokeime.SHOW_ABOUT_DIALOG"/>
-    </PreferenceScreen>
+        />
+
 
     <CheckBoxPreference
         android:key="color_theme_light"
