@@ -16,8 +16,7 @@ import android.preference.Preference.OnPreferenceClickListener;
 import static org.me.strokeime.StrokeIME.PREFS_TAG;
 import static org.me.strokeime.StrokeIME.PREFSKEY_COLOR_THEME_LIGHT;
 
-public class StrokeIMESettings extends PreferenceActivity
-    implements OnPreferenceClickListener {
+public class StrokeIMESettings extends PreferenceActivity {
     private static final int DIALOG_ABOUT = 1;
     private String mStrokeIMEVersion = null;
     private View mViewAbout = null;
@@ -39,16 +38,18 @@ public class StrokeIMESettings extends PreferenceActivity
         addPreferencesFromResource(R.xml.prefs);
 
         mAboutPreference = (Preference) findPreference("about_preference");
-        mAboutPreference.setOnPreferenceClickListener(this);
         mAboutPreference.setSummary(
                 String.format(getString(R.string.about_preference_summary), mStrokeIMEVersion));
+
+        mAboutPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                showDialog(DIALOG_ABOUT);
+                return true;
+            }
+        });
     }
 
-    @Override
-    public boolean onPreferenceClick(Preference preference) {
-        showDialog(DIALOG_ABOUT);
-        return true;
-    }
 
     @Override
     protected Dialog onCreateDialog(int id) {
