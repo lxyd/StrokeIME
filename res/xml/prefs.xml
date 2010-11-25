@@ -4,18 +4,17 @@
         android:title="@string/stroke_ime_settings"
         android:key="stroke_ime_settings">
 
-    <CheckBoxPreference
-            android:key="color_theme_light"
-            android:title="@string/color_theme_light"
-            android:persistent="true"
-            android:defaultValue="false"
-            />
+    <PreferenceScreen
+        android:key="about_preference"
+        android:title="@string/about_preference_title">
+        <intent android:action="org.me.strokeime.SHOW_ABOUT_DIALOG"/>
+    </PreferenceScreen>
 
-    <!--PreferenceScreen
-            android:title="@string/language_selection_title"
-            android:summary="@string/language_selection_summary">
-        <intent
-                android:action="com.android.inputmethod.latin.INPUT_LANGUAGE_SELECTION"/>
-    </PreferenceScreen-->
+    <CheckBoxPreference
+        android:key="color_theme_light"
+        android:title="@string/color_theme_light"
+        android:persistent="true"
+        android:defaultValue="false"
+        />
 
 </PreferenceScreen>

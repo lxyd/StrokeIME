@@ -2,4 +2,11 @@
 <resources>
     <string name="stroke_ime_settings">Настройки StrokeIME</string>
     <string name="color_theme_light">Светлая цветовая схема</string>
+
+    <string name="about_preference_title">О StrokeIME</string>
+    <string name="about_preference_summary">Версия %1$s</string>
+
+    <string name="about_dialog_text">Здесь будет небольшое описание софтины.
+        \nТакже, может быть, добавлю changelog.
+    </string>
 </resources>
