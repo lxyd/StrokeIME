@@ -20,9 +20,6 @@ public class LayoutEn extends LayoutBase {
         l(MT, OT, "diacritic");
         l(RT, OT, Action.LAYOUT_NEXT_PRIMARY);
         l(RB, OT, Action.LAYOUT_PREV_PRIMARY);
-        //l(LT, OT, "num-en", "?123");
-        //l(MT, OT, "spec-en", "êґå");
-        //l(RT, OT, "ru", "RU");
 
         t(MC, LT, "a", "A");
         t(MC, MT, "o", "O");

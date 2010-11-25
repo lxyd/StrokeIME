@@ -10,10 +10,6 @@ public class Action {
     public static final String LAYOUT_PREV_PRIMARY = "_prev_primary";
     public static final String LAYOUT_BACK_TO_PRIMARY = "_back_to_primary";
 
-    //public static final Action ACTION_SPECIAL_NEXT_PRIMARY_LAYOUT = createSpecialAction(SPECIAL_NEXT_PRIMARY_LAYOUT);
-    //public static final Action ACTION_SPECIAL_PREV_PRIMARY_LAYOUT = createSpecialAction(SPECIAL_PREV_PRIMARY_LAYOUT);
-    //public static final Action ACTION_SPECIAL_BACK_TO_PRIMARY_LAYOUT = createSpecialAction(SPECIAL_BACK_TO_PRIMARY_LAYOUT);
-
     public final int actionType;
     public final String value;
     public final int code;
@@ -35,8 +31,4 @@ public class Action {
     public static final Action createLayoutAction(String layoutName) {
         return new Action(TYPE_LAYOUT, layoutName, -1);
     }
-
-    /*public static final Action createLayoutSpecialAction(int code) {
-        return new Action(TYPE_LAYOUT, null, code);
-    }*/
 }

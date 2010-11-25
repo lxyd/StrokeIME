@@ -101,7 +101,7 @@ public abstract class Layout {
     protected int    getType()           { return TYPE_PRIMARY; }
     protected String getLabelPrimary()   { return null; }
     protected String getLabelSecondary() { return null; }
-    protected String getLocalesString()  { return "*";   }
+    protected String getLocalesString()  { return "*";  }
 
     /**
      * Initializes key actions.
@@ -376,32 +376,5 @@ public abstract class Layout {
     protected final void l(int start, int end, String layoutName) {
         map[SHIFT_LOCK][start][end] = map[SHIFT_ON][start][end] = map[SHIFT_OFF][start][end] = new Key(Action.createLayoutAction(layoutName));
     }
-
-    /**
-     * Register ChangeLayout stroke in the map.
-     * This will work for both shifted and not shifted states
-     *
-     * @param start      Start zone
-     * @param end        End zone
-     * @param layoutName Layout to change to
-     * @param label      Keyboard text for this layout
-     * /
-    protected final void l(int start, int end, String layoutName, String label) {
-        map[SHIFT_LOCK][start][end] = map[SHIFT_ON][start][end] = map[SHIFT_OFF][start][end] = new Key(Action.createLayoutAction(layoutName), label);
-    }
-
-    /**
-     * Register ChangeLayout stroke in the map.
-     * This will work for both shifted and not shifted states
-     *
-     * @param start      Start zone
-     * @param end        End zone
-     * @param layoutName Layout to change to
-     * @param gliph      Keyboard gliph for this layout
-     * /
-    protected final void l(int start, int end, String layoutName, Gliph gliph) {
-        map[SHIFT_ON][start][end] = map[SHIFT_OFF][start][end] = new Key(Action.createLayoutAction(layoutName), gliph);
-    }
-    */
 }
 

@@ -17,9 +17,6 @@ public class LayoutRu extends LayoutBase {
     protected void initializeLayout() {
         super.initializeLayout();
 
-        //l(LT, OT, "num-ru", "?123");
-        //l(MT, OT, "spec-ru", "êґå");
-        //l(RT, OT, "en", "EN");
         l(LT, OT, "num");
         l(MT, OT, "diacritic");
         l(RT, OT, Action.LAYOUT_NEXT_PRIMARY);

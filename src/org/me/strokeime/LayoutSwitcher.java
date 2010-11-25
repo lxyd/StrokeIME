@@ -40,16 +40,24 @@ public class LayoutSwitcher {
             mCurrentLayout.registerLayoutActionKey(LAYOUT_BACK_TO_PRIMARY, backToPrimaryKeys.get(mCurrentPrimaryLayout.name));
         }
 
+        if(primaryLayouts.size() < 2) {
+            mCurrentLayout.registerLayoutActionKey(LAYOUT_PREV_PRIMARY, null);
+            mCurrentLayout.registerLayoutActionKey(LAYOUT_NEXT_PRIMARY, null);
+            return;
+        }
+
         int i = primaryLayouts.indexOf(mCurrentPrimaryLayout);
         int next_i = i == primaryLayouts.size() - 1 ? 0 : i + 1;
         mCurrentLayout.registerLayoutActionKey(LAYOUT_NEXT_PRIMARY, primaryLayoutKeys.get(primaryLayouts.get(next_i).name));
 
-        if(primaryLayouts.size() > 2) {
-            int prev_i = i == 0 ? primaryLayouts.size() - 1 : i - 1;
-            mCurrentLayout.registerLayoutActionKey(LAYOUT_PREV_PRIMARY, primaryLayoutKeys.get(primaryLayouts.get(prev_i).name));
-        } else {
+        // don't display previous primary layout button if it is equal to next primary layout
+        if(primaryLayouts.size() == 2) {
             mCurrentLayout.registerLayoutActionKey(LAYOUT_PREV_PRIMARY, null);
+            return;
         }
+
+        int prev_i = i == 0 ? primaryLayouts.size() - 1 : i - 1;
+        mCurrentLayout.registerLayoutActionKey(LAYOUT_PREV_PRIMARY, primaryLayoutKeys.get(primaryLayouts.get(prev_i).name));
     }
 
     public LayoutSwitcher() {
