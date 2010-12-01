@@ -14,6 +14,8 @@ public abstract class Layout {
     public static final int TYPE_SECONDARY_CHAR = 2;
     public static final int TYPE_SECONDARY_WORD = 3;
 
+    public static final int ZONE_NONE = -1;
+
     public static final int MC = 0x0;
     public static final int LT = 0x1;
     public static final int MT = 0x2;
