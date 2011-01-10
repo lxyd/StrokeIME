@@ -10,7 +10,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.content.res.Resources;
-import android.util.TypedValue;
+//import android.util.TypedValue;
 import static org.me.strokeime.Layout.*;
 
 public class InputView extends View {
@@ -135,7 +135,8 @@ public class InputView extends View {
         // Use only two pointers
         //if(idx >= 2)
         //    return false;
-        switch(event.getActionMasked()) {
+        //switch(event.getActionMasked()) {
+        switch(event.getAction()) {
             //case MotionEvent.ACTION_CANCEL:
             //    //mInputListener.onInput(new InputEvent(this, Action.createTextAction("CNL " + idx + "\n")));
             //    mMultitouchTriggered = false;
