@@ -33,7 +33,7 @@ public class StrokeIME
     private int mShiftState;
 
     // _ - not a word separator
-    private String mWordSeparators = " \t\n\r`~!@#$%^&*()+-=[]{}|\\;:'\"<>,./?";
+    private String mWordSeparators = " \t\n\r`~!@#$%^&*()÷×•+-–—=[]{}|\\;:…'\"“”„<>,./?";
     private String mWordSeparatorsForLayoutSwitch = " \t\n\r";
 
     /**
@@ -136,15 +136,26 @@ public class StrokeIME
 
     private final void deleteWord(InputConnection c) {
         int cnt = 0, i = cnt, l;
-
+        boolean delseparators;
         CharSequence t;
+
+        t = c.getTextBeforeCursor(1, 0);
+        if(t.length() == 0)
+            return;
+        // if the first letter to the left is separator - delete separators
+        delseparators = mWordSeparators.indexOf(t.charAt(0)) != -1;
+
         while(i == cnt) { // while all the characters read are separators
             cnt += 100;
             t = c.getTextBeforeCursor(cnt, 0);
             l = t.length(); // it may differ from cnt
             for(i = 0; i < l && i < cnt; ++i) {
                 if(mWordSeparators.indexOf(t.charAt(l-1-i)) != -1) {
-                    break;
+                    if(!delseparators)
+                        break;
+                } else {
+                    if(delseparators)
+                        break;
                 }
             }
         }

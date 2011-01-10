@@ -15,9 +15,10 @@ public class LayoutDiacritic extends Layout {
     @Override
     protected void initializeLayout() {
 
+        l(LT, OT, "num");
         l(MT, OT, Action.LAYOUT_BACK_TO_PRIMARY);
-        //l(RT, OT, Action.LAYOUT_NEXT_PRIMARY);
-        //l(RB, OT, Action.LAYOUT_PREV_PRIMARY);
+        l(RT, OT, Action.LAYOUT_NEXT_PRIMARY);
+        l(RB, OT, Action.LAYOUT_PREV_PRIMARY);
 
         t(MC, LT, "ç", "Ç");
         t(MC, MT, "î", "Î");

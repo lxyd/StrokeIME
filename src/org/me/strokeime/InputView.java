@@ -119,70 +119,69 @@ public class InputView extends View {
 
     // current stroke's initial position
     private int mStrokeStartZone;
-    private boolean mMultitouchTriggered = false;
-    private float[] mX = new float[2];
-    private float[] mY = new float[2];
-    private int[] mIds = new int[2];
-    private int mIdFirst = 0;
+    //private boolean mMultitouchTriggered = false;
+    //private float[] mX = new float[2];
+    //private float[] mY = new float[2];
+    // current pointer index
+    //private int mStrokePointerIdx = 0;
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        int idx;
+        //int idx;
         Action a;
 
         // Multitouch works only with newer versions of android
-
-        idx = event.getAction() >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
-        mIds[0] = event.getPointerId(0);
-        mIds[1] = event.getPointerId(1);
+        //idx = event.getAction() >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
 
         // Use only two pointers
-        if(idx >= 2)
-            return false;
+        //if(idx >= 2)
+        //    return false;
         switch(event.getActionMasked()) {
-            case MotionEvent.ACTION_CANCEL:
-                //mInputListener.onInput(new InputEvent(this, Action.createTextAction("CNL " + idx + "\n")));
-                mMultitouchTriggered = false;
-                break;
+            //case MotionEvent.ACTION_CANCEL:
+            //    //mInputListener.onInput(new InputEvent(this, Action.createTextAction("CNL " + idx + "\n")));
+            //    mMultitouchTriggered = false;
+            //    break;
             case MotionEvent.ACTION_UP:
                 //mInputListener.onInput(new InputEvent(this, Action.createTextAction("UP  " + idx + "\n")));
-                if(!mMultitouchTriggered) {
-                    a = mLayout.getAction(mShiftState, mStrokeStartZone, getZone(mX[mIdFirst], mY[mIdFirst]));
+                //if(!mMultitouchTriggered) {
+                    //a = mLayout.getAction(mShiftState, mStrokeStartZone, getZone(mX[mStrokePointerIdx], mY[mStrokePointerIdx]));
+                    a = mLayout.getAction(mShiftState, mStrokeStartZone, getZone(event.getX(), event.getY()));
                     if(mInputListener != null && a != null)
                         mInputListener.onInput(new InputEvent(this, a));
-                }
-                mMultitouchTriggered = false;
+                //}
+                //mMultitouchTriggered = false;
                 break;
-            case MotionEvent.ACTION_POINTER_UP:
-                //mInputListener.onInput(new InputEvent(this, Action.createTextAction("PUP " + idx + "\n")));
-                if(mMultitouchTriggered) {
-                    a = mLayout.getAction(mShiftState, getZone(mX[mIdFirst], mY[mIdFirst]), getZone(mX[1-mIdFirst], mY[1-mIdFirst]));
-                    if(mInputListener != null && a != null)
-                        mInputListener.onInput(new InputEvent(this, a));
-                    // pointer that is left on the screen is considered to be a first one from now
-                    mIdFirst = 1-idx;
-                }
-                break;
+            //case MotionEvent.ACTION_POINTER_UP:
+            //    //mInputListener.onInput(new InputEvent(this, Action.createTextAction("PUP " + idx + "\n")));
+            //    if(mMultitouchTriggered) {
+            //        a = mLayout.getAction(mShiftState, getZone(mX[mStrokePointerIdx], mY[mStrokePointerIdx]), getZone(mX[1-mStrokePointerIdx], mY[1-mStrokePointerIdx]));
+            //        if(mInputListener != null && a != null)
+            //            mInputListener.onInput(new InputEvent(this, a));
+            //        // pointer that is left on the screen is considered to be a start one from now
+            //        mStrokePointerIdx = 1-idx;
+            //    }
+            //    break;
             case MotionEvent.ACTION_DOWN:
                 //mInputListener.onInput(new InputEvent(this, Action.createTextAction("DN  " + idx + "\n")));
                 // Remember this to use later during ACTION_UP to fire an input event
-                mX[idx] = event.getX(mIds[idx]);
-                mY[idx] = event.getY(mIds[idx]);
+                //mX[idx] = event.getX(idx);
+                //mY[idx] = event.getY(idx);
                 // this is for usual (not multitouch) mode
-                mStrokeStartZone = getZone(mX[idx], mY[idx]);
-                mIdFirst = 0; //idx
+                //mStrokeStartZone = getZone(mX[idx], mY[idx]);
+                mStrokeStartZone = getZone(event.getX(), event.getY());
+                //mStrokePointerIdx = 0; //idx
                 break;
-            case MotionEvent.ACTION_POINTER_DOWN:
-                //mInputListener.onInput(new InputEvent(this, Action.createTextAction("PDN " + idx + "\n")));
-                // Remember this to use later during ACTION_UP to fire an input event
-                mX[idx] = event.getX(mIds[idx]);
-                mY[idx] = event.getY(mIds[idx]);
-                mMultitouchTriggered = true;
-                break;
-            case MotionEvent.ACTION_MOVE:
-                // Remember this to use later during ACTION_UP to fire an input event
-                mX[idx] = event.getX(mIds[idx]);
-                mY[idx] = event.getY(mIds[idx]);
-                break;
+            //case MotionEvent.ACTION_POINTER_DOWN:
+            //    //mInputListener.onInput(new InputEvent(this, Action.createTextAction("PDN " + idx + "\n")));
+            //    // Remember this to use later during ACTION_UP to fire an input event
+            //    mX[idx] = event.getX(idx);
+            //    mY[idx] = event.getY(idx);
+            //    mMultitouchTriggered = true;
+            //    break;
+            //case MotionEvent.ACTION_MOVE:
+            //    // Remember this to use later during ACTION_UP to fire an input event
+            //    mX[idx] = event.getX(idx);
+            //    mY[idx] = event.getY(idx);
+            //    break;
         }
         return true;
     }

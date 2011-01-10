@@ -28,10 +28,10 @@ public class LayoutRu extends LayoutBase {
         // MC-MC is SPACE
         t(MC, LB, "у", "У");
         t(MC, MB, "и", "И");
-        t(MC, RB, "ю", "Ю");
+        t(MC, RB, "я", "Я");
 
         // LT-LT is SHIFT
-        t(LT, MT, "я", "Я");
+        t(LT, MT, "ю", "Ю");
         t(LT, RT, "ы", "Ы");
         t(LT, MC, "б", "Б");
         t(LT, LB, "й", "Й");
@@ -42,7 +42,7 @@ public class LayoutRu extends LayoutBase {
         t(MT, MT, "п", "П");
         t(MT, RT, "ш", "Ш");
         t(MT, MC, "д", "Д");
-        t(MT, LB, "/", "/");
+        t(MT, LB, "/", "\\", "/");
         // MT-MB is !
         t(MT, RB, "э", "Э");
 

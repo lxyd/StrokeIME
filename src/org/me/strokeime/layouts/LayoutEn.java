@@ -27,10 +27,10 @@ public class LayoutEn extends LayoutBase {
         // MC-MC is SPACE
         t(MC, LB, "u", "U");
         t(MC, MB, "i", "I");
-        t(MC, RB, "h", "H");
+        t(MC, RB, "y", "Y");
 
         // LT-LT is SHIFT
-        t(LT, MT, "y", "Y");
+        t(LT, MT, "h", "H");
         t(LT, RT, "[", "[");
         t(LT, MC, "b", "B");
         t(LT, LB, "q", "Q");

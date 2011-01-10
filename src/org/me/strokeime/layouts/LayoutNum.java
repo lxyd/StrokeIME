@@ -18,8 +18,9 @@ public class LayoutNum extends LayoutBase {
         super.initializeLayout();
 
         l(LT, OT, Action.LAYOUT_BACK_TO_PRIMARY);
-        //l(RT, OT, Action.LAYOUT_NEXT_PRIMARY);
-        //l(RB, OT, Action.LAYOUT_PREV_PRIMARY);
+        l(MT, OT, "diacritic");
+        l(RT, OT, Action.LAYOUT_NEXT_PRIMARY);
+        l(RB, OT, Action.LAYOUT_PREV_PRIMARY);
 
         t(MC, LT, "5", "5");
         t(MC, MT, "0", "0");
