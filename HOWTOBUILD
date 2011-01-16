@@ -1,0 +1,19 @@
+To build this program from sources you must have installed android sdk 
+software of version 8.
+
+Then you must create a file named local.properties with the following content:
+=========== begin ===============
+sdk.dir=$ANDROID_SDK_DIR
+===========  end  ===============
+where ANDROID_SDK_DIR is the root directory of the Android SDK
+for example,
+sdk.dir=/opt/android-sdk
+
+Place this file in the root of the project.
+
+Also, you should edit file $ANDROID_SDK_DIR/tools/ant/ant_rules_r3.xml in the 
+following way:
+- find the "compile" target
+- find the "javac" task
+- set the "encoding" attribute to "utf8" instead of "ascii"
+

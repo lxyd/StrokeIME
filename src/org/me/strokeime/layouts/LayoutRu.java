@@ -1,3 +1,21 @@
+/*
+    Copyright (C) 2011 Alexey Dubinin 
+
+    This file is part of StrokeIME, an alternative input method for Android OS
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 package org.me.strokeime.layouts;
 
@@ -6,7 +24,7 @@ import org.me.strokeime.Action;
 import static org.me.strokeime.GliphBank.*;
 import static android.view.KeyEvent.*;
 
-public class LayoutRu extends LayoutBase {
+public class LayoutRu extends Layout {
     @Override protected String getTitle()          { return "Русский язык"; }
     @Override protected String getName()           { return "ru"; }
     @Override protected String getLabelPrimary()   { return "RU"; }
@@ -15,8 +33,6 @@ public class LayoutRu extends LayoutBase {
 
     @Override
     protected void initializeLayout() {
-        super.initializeLayout();
-
         l(LT, OT, "num");
         l(MT, OT, "diacritic");
         l(RT, OT, Action.LAYOUT_NEXT_PRIMARY);
@@ -25,12 +41,12 @@ public class LayoutRu extends LayoutBase {
         t(MC, LT, "а", "А");
         t(MC, MT, "о", "О");
         t(MC, RT, "е", "Е");
-        // MC-MC is SPACE
+        t(MC, MC, " ", " ", GLIPH_SPACE, GLIPH_SPACE);
         t(MC, LB, "у", "У");
         t(MC, MB, "и", "И");
         t(MC, RB, "я", "Я");
 
-        // LT-LT is SHIFT
+        c(LT, LT, KEYCODE_SHIFT_LEFT, GLIPH_SHIFT, GLIPH_SHIFT, GLIPH_SHIFT_LOCK); 
         t(LT, MT, "ю", "Ю");
         t(LT, RT, "ы", "Ы");
         t(LT, MC, "б", "Б");
@@ -43,15 +59,15 @@ public class LayoutRu extends LayoutBase {
         t(MT, RT, "ш", "Ш");
         t(MT, MC, "д", "Д");
         t(MT, LB, "/", "\\", "/");
-        // MT-MB is !
+        t(MT, MB, "!", "!");
         t(MT, RB, "э", "Э");
 
         t(RT, LT, "ь", "Ь");
         t(RT, MT, "в", "В");
-        // RT-RT is BACKSPACE
+        c(RT, RT, KEYCODE_DEL, KEYCODE_DEL_WORD, KEYCODE_DEL, GLIPH_DEL, GLIPH_DEL_WORD, GLIPH_DEL); 
         t(RT, MC, "к", "К");
         t(RT, LB, ")", ")");
-        // RT-MB is ENTER
+        c(RT, MB, KEYCODE_ENTER, GLIPH_ENTER, GLIPH_ENTER);
         t(RT, RB, "з", "З");
 
         t(LB, LT, "ц", "Ц");
@@ -63,7 +79,7 @@ public class LayoutRu extends LayoutBase {
         t(LB, RB, "щ", "Щ");
 
         t(MB, LT, "«", "'", "«");
-        // MB-MT is ?
+        t(MB, MT, "?", "?");
         t(MB, RT, "»", "\"", "»");
         t(MB, MC, "м", "М");
         t(MB, LB, "л", "Л");
@@ -72,10 +88,10 @@ public class LayoutRu extends LayoutBase {
 
         t(RB, LT, ";", ";");
         t(RB, MT, ":", ":");
-        //RB-RT is ,
+        t(RB, RT, ",", ",");
         t(RB, MC, "х", "Х");
         t(RB, LB, "ъ", "Ъ");
-        //RB-MB is .
+        t(RB, MB, ".", ".");
         t(RB, RB, "н", "Н");
     }
 }

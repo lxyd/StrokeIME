@@ -1,3 +1,21 @@
+/*
+    Copyright (C) 2011 Alexey Dubinin 
+
+    This file is part of StrokeIME, an alternative input method for Android OS
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 package org.me.strokeime;
 
@@ -10,12 +28,11 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.content.res.Resources;
-//import android.util.TypedValue;
 import static org.me.strokeime.Layout.*;
 
 public class InputView extends View {
     // colors
-    private ColorTheme mColorTheme;
+    //private ColorTheme mColorTheme;
     private Paint mFillPaint;
     private Paint mStrokePaint;
     private Paint mTextPaint;
@@ -73,20 +90,23 @@ public class InputView extends View {
     }
 
     public final void setColorTheme(ColorTheme colorTheme) {
-        mColorTheme = colorTheme;
+        //mColorTheme = colorTheme;
 
-        mFillPaint.setColor(mColorTheme.bg);
-        mStrokePaint.setColor(mColorTheme.fg);
-        mTextPaint.setColor(mColorTheme.txt);
-        mHotTextPaint.setColor(mColorTheme.txtHot);
-        mBackTextPaint.setColor(mColorTheme.txtBack);
+        mFillPaint.setColor(colorTheme.bg);
+        mStrokePaint.setColor(colorTheme.fg);
+        mTextPaint.setColor(colorTheme.txt);
+        mHotTextPaint.setColor(colorTheme.txtHot);
+        mBackTextPaint.setColor(colorTheme.txtBack);
 
-        mTextPaint.setFakeBoldText(mColorTheme.isBold);
-        mHotTextPaint.setFakeBoldText(mColorTheme.isBold);
+        mTextPaint.setFakeBoldText(colorTheme.isBold);
+        mHotTextPaint.setFakeBoldText(colorTheme.isBold);
 
         invalidate();
     }
 
+    /**
+     * Determines in which zone is point (x,y) located.
+     */
     private final int getZone (float x, float y) {
         int w, h;
         w = getWidth();
@@ -119,70 +139,19 @@ public class InputView extends View {
 
     // current stroke's initial position
     private int mStrokeStartZone;
-    //private boolean mMultitouchTriggered = false;
-    //private float[] mX = new float[2];
-    //private float[] mY = new float[2];
-    // current pointer index
-    //private int mStrokePointerIdx = 0;
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        //int idx;
         Action a;
 
-        // Multitouch works only with newer versions of android
-        //idx = event.getAction() >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
-
-        // Use only two pointers
-        //if(idx >= 2)
-        //    return false;
-        //switch(event.getActionMasked()) {
         switch(event.getAction()) {
-            //case MotionEvent.ACTION_CANCEL:
-            //    //mInputListener.onInput(new InputEvent(this, Action.createTextAction("CNL " + idx + "\n")));
-            //    mMultitouchTriggered = false;
-            //    break;
             case MotionEvent.ACTION_UP:
-                //mInputListener.onInput(new InputEvent(this, Action.createTextAction("UP  " + idx + "\n")));
-                //if(!mMultitouchTriggered) {
-                    //a = mLayout.getAction(mShiftState, mStrokeStartZone, getZone(mX[mStrokePointerIdx], mY[mStrokePointerIdx]));
-                    a = mLayout.getAction(mShiftState, mStrokeStartZone, getZone(event.getX(), event.getY()));
-                    if(mInputListener != null && a != null)
-                        mInputListener.onInput(new InputEvent(this, a));
-                //}
-                //mMultitouchTriggered = false;
+                a = mLayout.getAction(mShiftState, mStrokeStartZone, getZone(event.getX(), event.getY()));
+                if(mInputListener != null && a != null)
+                    mInputListener.onInput(new InputEvent(this, a));
                 break;
-            //case MotionEvent.ACTION_POINTER_UP:
-            //    //mInputListener.onInput(new InputEvent(this, Action.createTextAction("PUP " + idx + "\n")));
-            //    if(mMultitouchTriggered) {
-            //        a = mLayout.getAction(mShiftState, getZone(mX[mStrokePointerIdx], mY[mStrokePointerIdx]), getZone(mX[1-mStrokePointerIdx], mY[1-mStrokePointerIdx]));
-            //        if(mInputListener != null && a != null)
-            //            mInputListener.onInput(new InputEvent(this, a));
-            //        // pointer that is left on the screen is considered to be a start one from now
-            //        mStrokePointerIdx = 1-idx;
-            //    }
-            //    break;
             case MotionEvent.ACTION_DOWN:
-                //mInputListener.onInput(new InputEvent(this, Action.createTextAction("DN  " + idx + "\n")));
-                // Remember this to use later during ACTION_UP to fire an input event
-                //mX[idx] = event.getX(idx);
-                //mY[idx] = event.getY(idx);
-                // this is for usual (not multitouch) mode
-                //mStrokeStartZone = getZone(mX[idx], mY[idx]);
                 mStrokeStartZone = getZone(event.getX(), event.getY());
-                //mStrokePointerIdx = 0; //idx
                 break;
-            //case MotionEvent.ACTION_POINTER_DOWN:
-            //    //mInputListener.onInput(new InputEvent(this, Action.createTextAction("PDN " + idx + "\n")));
-            //    // Remember this to use later during ACTION_UP to fire an input event
-            //    mX[idx] = event.getX(idx);
-            //    mY[idx] = event.getY(idx);
-            //    mMultitouchTriggered = true;
-            //    break;
-            //case MotionEvent.ACTION_MOVE:
-            //    // Remember this to use later during ACTION_UP to fire an input event
-            //    mX[idx] = event.getX(idx);
-            //    mY[idx] = event.getY(idx);
-            //    break;
         }
         return true;
     }
@@ -227,6 +196,7 @@ public class InputView extends View {
         drawKey(canvas, mShiftState, zone, MB, bx+hs,   bx+2*hs, by+3*vs);
         drawKey(canvas, mShiftState, zone, RB, bx+2*hs, bx+3*hs, by+3*vs);
     }
+
     private final void drawKey(Canvas canvas, int shiftState, int strokeStart, int strokeEnd, float x1, float x2, float y) {
         Key k = mLayout.getKey(shiftState, strokeStart, strokeEnd);
         if(k == null) return; // for unused strokes
@@ -240,9 +210,9 @@ public class InputView extends View {
             p = mTextPaint;
 
         if(k.gliph == null) {
-            canvas.drawText(k.label, x1 + (x2 - x1 - p.measureText(k.label))/2.0f, y, p);
+            canvas.drawText(k.label, x1 + (x2 - x1 - p.measureText(k.label))/2.0f,  y, p);
         } else {
-            k.gliph.draw(canvas,     x1 + (x2 - x1 - k.gliph.measureWidth(p))/2.0f,     y, p);
+            k.gliph.draw(canvas,     x1 + (x2 - x1 - k.gliph.measureWidth(p))/2.0f, y, p);
         }
     }
 

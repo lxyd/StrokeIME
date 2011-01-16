@@ -1,3 +1,21 @@
+/*
+    Copyright (C) 2011 Alexey Dubinin 
+
+    This file is part of StrokeIME, an alternative input method for Android OS
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 package org.me.strokeime;
 
@@ -69,21 +87,6 @@ public class StrokeIME
 
         mLayoutSwitcher = new LayoutSwitcher();
         mShiftState = Layout.SHIFT_OFF;
-    }
-
-    /**
-     * This is the point where you can do all of your UI initialization.  It
-     * is called after creation and any configuration change.
-     */
-    @Override public void onInitializeInterface() {
-        /*if (mQwertyKeyboard != null) {
-            // Configuration changes can happen after the keyboard gets recreated,
-            // so we need to be able to re-build the keyboards if the available
-            // space has changed.
-            int displayWidth = getMaxWidth();
-            if (displayWidth == mLastDisplayWidth) return;
-            mLastDisplayWidth = displayWidth;
-        }*/
     }
 
     /**

@@ -1,3 +1,21 @@
+/*
+    Copyright (C) 2011 Alexey Dubinin 
+
+    This file is part of StrokeIME, an alternative input method for Android OS
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 package org.me.strokeime.layouts;
 
@@ -6,7 +24,7 @@ import org.me.strokeime.Action;
 import static org.me.strokeime.GliphBank.*;
 import static android.view.KeyEvent.*;
 
-public class LayoutNum extends LayoutBase {
+public class LayoutNum extends Layout {
     @Override protected String getTitle()          { return "Numbers and symbols"; }
     @Override protected String getName()           { return "num"; }
     @Override protected String getLabelPrimary()   { return "?123"; }
@@ -15,8 +33,6 @@ public class LayoutNum extends LayoutBase {
 
     @Override
     protected void initializeLayout() {
-        super.initializeLayout();
-
         l(LT, OT, Action.LAYOUT_BACK_TO_PRIMARY);
         l(MT, OT, "diacritic");
         l(RT, OT, Action.LAYOUT_NEXT_PRIMARY);
@@ -25,12 +41,12 @@ public class LayoutNum extends LayoutBase {
         t(MC, LT, "5", "5");
         t(MC, MT, "0", "0");
         t(MC, RT, "1", "1");
-        // MC-MC is SPACE
+        t(MC, MC, " ", " ", GLIPH_SPACE, GLIPH_SPACE);
         t(MC, LB, "4", "4");
         t(MC, MB, "3", "3");
         t(MC, RB, "2", "2");
 
-        // LT-LT is SHIFT
+        c(LT, LT, KEYCODE_SHIFT_LEFT, GLIPH_SHIFT, GLIPH_SHIFT, GLIPH_SHIFT_LOCK); 
         c(LT, MT, KEYCODE_TAB, GLIPH_TAB, GLIPH_TAB); 
         t(LT, RT, "[", "£");
         t(LT, MC, "%", "%");
@@ -43,19 +59,19 @@ public class LayoutNum extends LayoutBase {
         t(MT, RT, ">", "×");
         t(MT, MC, "*", "•");
         t(MT, LB, "/", "¶");
-        // MT-MB is !
+        t(MT, MB, "!", "!");
         t(MT, RB, "\\", "\\");
 
         t(RT, LT, "]", "™");
         t(RT, MT, "№", "№");
-        // RT-RT is BACKSPACE
+        c(RT, RT, KEYCODE_DEL, KEYCODE_DEL_WORD, KEYCODE_DEL, GLIPH_DEL, GLIPH_DEL_WORD, GLIPH_DEL); 
         //t(RT, MC, "", "");
         t(RT, LB, ")", "®");
-        // RT-MB is ENTER
+        c(RT, MB, KEYCODE_ENTER, GLIPH_ENTER, GLIPH_ENTER);
         t(RT, RB, "}", "©");
 
         t(LB, LT, "+", "+");
-        // LB-MT is -
+        t(LB, MT, "-", "-");
         t(LB, RT, "_", "…");
         t(LB, MC, "#", "#");
         t(LB, LB, "9", "9");
@@ -63,7 +79,7 @@ public class LayoutNum extends LayoutBase {
         t(LB, RB, "@", "@");
 
         t(MB, LT, "'", "`");
-        // MB-MT is ?
+        t(MB, MT, "?", "?");
         t(MB, RT, "\"", "„");
         t(MB, MC, "&", "&");
         t(MB, LB, "^", "^");
@@ -72,10 +88,10 @@ public class LayoutNum extends LayoutBase {
 
         t(RB, LT, ";", ";");
         t(RB, MT, ":", ":");
-        //RB-RT is ,
+        t(RB, RT, ",", ",");
         t(RB, MC, "=", "=");
         t(RB, LB, "|", "√");
-        //RB-MB is .
+        t(RB, MB, ".", ".");
         t(RB, RB, "7", "7");
     }
 }

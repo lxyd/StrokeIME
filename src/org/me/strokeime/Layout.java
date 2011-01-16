@@ -1,3 +1,21 @@
+/*
+    Copyright (C) 2011 Alexey Dubinin 
+
+    This file is part of StrokeIME, an alternative input method for Android OS
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 package org.me.strokeime;
 
@@ -100,9 +118,22 @@ public abstract class Layout {
     protected abstract String getName();
     protected abstract String getTitle();
 
+    /**
+     * Gets layout type: primary or secondary.
+     * Should be overriden.
+     */
     protected int    getType()           { return TYPE_PRIMARY; }
+    /**
+     * In subclass you should override this method and return desired primary label.
+     */
     protected String getLabelPrimary()   { return null; }
+    /**
+     * In subclass you should override this method and return desired secondary label.
+     */
     protected String getLabelSecondary() { return null; }
+    /**
+     * Should be overriden.
+     */
     protected String getLocalesString()  { return "*";  }
 
     /**
@@ -112,7 +143,7 @@ public abstract class Layout {
     protected abstract void initializeLayout();
 
     /**
-     * Main zones map.
+     * Main zone map.
      * Dimensions are:
      * shift state, stroke start zone, stroke end zone
      */
@@ -128,8 +159,6 @@ public abstract class Layout {
      * E.g. set correct PRIMARY layout to switch to.
      */
     public final void registerLayoutActionKey(String layoutName, Key key) {
-        //if(layoutName.equals(Action.LAYOUT_NEXT_PRIMARY))
-        //    throw new RuntimeException(layoutName + " " + key.label + " " + key.action.value);
         if(key == null)
             layoutSpecialActionsKeys.remove(layoutName);
         else
@@ -144,9 +173,7 @@ public abstract class Layout {
         // if action has type of TYPE_LAYOUT, we should use Key, 
         // provided to us by LayoutBank
         if(k != null && k.action.actionType == Action.TYPE_LAYOUT) {
-            k = layoutSpecialActionsKeys.get(k.action.value);
-            // DON'T throw exception. LayoutBank may tell us to ignore some layouts (e.g. PREV_PRIMARY_LAYOUT)
-            //if(k == null) throw new RuntimeException("There is no key for layout " + k.action.layoutName + ".");
+            k = layoutSpecialActionsKeys.get(k.action.value); // possibly, null
         }
         return k;
     }

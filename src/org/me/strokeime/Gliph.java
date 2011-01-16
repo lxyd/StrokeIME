@@ -1,3 +1,21 @@
+/*
+    Copyright (C) 2011 Alexey Dubinin 
+
+    This file is part of StrokeIME, an alternative input method for Android OS
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 package org.me.strokeime;
 
@@ -9,56 +27,59 @@ import android.graphics.Matrix;
 
 public abstract class Gliph {
     public Gliph() {
-        path = new Path();
-        pathBold = new Path();
+        mPath = new Path();
+        mPathBold = new Path();
 
-        bounds = new RectF();
-        boundsBold = new RectF();
+        mBounds = new RectF();
+        mBoundsBold = new RectF();
 
-        initialize(path, false);
-        initialize(pathBold, true);
+        initialize(mPath, false);
+        initialize(mPathBold, true);
 
-        path.computeBounds(bounds, false);
-        pathBold.computeBounds(boundsBold, false);
+        mPath.computeBounds(mBounds, false);
+        mPathBold.computeBounds(mBoundsBold, false);
 
-        modifyBounds(bounds, false);
-        modifyBounds(boundsBold, true);
+        modifyBounds(mBounds, false);
+        modifyBounds(mBoundsBold, true);
     }
 
     protected abstract void initialize(Path path, boolean bold);
     protected void modifyBounds(RectF bounds, boolean bold) { }
 
-    private Path path, pathBold;
-    private RectF bounds, boundsBold;
+    private Path mPath, mPathBold;
+    private RectF mBounds, mBoundsBold;
 
     public final float measureWidth(Paint p) {
-        RectF bounds = p.isFakeBoldText() ? this.boundsBold : this.bounds;
+        RectF bounds = p.isFakeBoldText() ? mBoundsBold : mBounds;
         return bounds.width() * p.getTextSize() / bounds.height();
     }
 
-    public final void draw(Canvas c, float x, float y, Paint p) {
-        Path path = p.isFakeBoldText() ? this.pathBold : this.path;
-        RectF bounds = p.isFakeBoldText() ? this.boundsBold : this.bounds;
+    private Matrix mTransformMatrix = new Matrix();
+    private Path mTransformedPath = new Path();
 
-        Matrix m = new Matrix();
-        Path res = new Path();
+    public final void draw(Canvas c, float x, float y, Paint p) {
+        Path path = p.isFakeBoldText() ? mPathBold : mPath;
+        RectF bounds = p.isFakeBoldText() ? mBoundsBold : mBounds;
+
         float scale = p.getTextSize() / bounds.height();
 
-        m.setScale(scale, scale, bounds.left, bounds.bottom);
         switch(p.getTextAlign()) {
             case LEFT:
-                m.postTranslate(x-bounds.left, y-bounds.bottom);
+                mTransformMatrix.setScale(scale, scale, bounds.left, bounds.bottom);
+                mTransformMatrix.postTranslate(x-bounds.left, y-bounds.bottom);
                 break;
             case RIGHT:
-                m.postTranslate(x-bounds.right, y-bounds.bottom);
+                mTransformMatrix.setScale(scale, scale, bounds.right, bounds.bottom);
+                mTransformMatrix.postTranslate(x-bounds.right, y-bounds.bottom);
                 break;
             case CENTER:
-                m.postTranslate(x-(bounds.left+bounds.right)/2f, y-bounds.bottom);
+                mTransformMatrix.setScale(scale, scale, (bounds.left+bounds.right)/2f, bounds.bottom);
+                mTransformMatrix.postTranslate(x-(bounds.left+bounds.right)/2f, y-bounds.bottom);
                 break;
             default:
                 throw new RuntimeException("Unsupported Paint.Align value");
         }
-        path.transform(m, res);
-        c.drawPath(res, p);
+        path.transform(mTransformMatrix, mTransformedPath);
+        c.drawPath(mTransformedPath, p);
     }
 }

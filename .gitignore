@@ -4,3 +4,4 @@ gen/**/*
 gen/*
 *.swp
 *~
+local.properties
