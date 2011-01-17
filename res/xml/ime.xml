@@ -18,4 +18,4 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <input-method xmlns:android="http://schemas.android.com/apk/res/android"
-    android:settingsActivity="org.me.strokeime.StrokeIMESettings" />
+    android:settingsActivity="org.strokeime.StrokeIMESettings" />

@@ -17,31 +17,22 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package org.me.strokeime;
+package org.strokeime;
 
-/**
- * Action, combined with its label (gliph).
- */
-public class Key {
-    public final Action action;
-    public final String label;
-    public final Gliph gliph;
+public class ColorTheme {
+    public final int bg;
+    public final int fg;
+    public final int txt; 
+    public final int txtBack;
+    public final int txtHot;
+    public final boolean isBold;
 
-    // constructor for special keys
-    public Key(Action action) {
-        this.action = action;
-        this.label = null;
-        this.gliph = null;
-    }
-
-    public Key(Action action, String label) {
-        this.action = action;
-        this.label = label;
-        this.gliph = null;
-    }
-    public Key(Action action, Gliph gliph) {
-        this.action = action;
-        this.label = null;
-        this.gliph = gliph;
+    public ColorTheme(int bg, int fg, int txt, int txtHot, int txtBack, boolean isBold) {
+        this.bg = bg;
+        this.fg = fg;
+        this.txt = txt;
+        this.txtHot = txtHot;
+        this.txtBack = txtBack;
+        this.isBold = isBold;
     }
 }

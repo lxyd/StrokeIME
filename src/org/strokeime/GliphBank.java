@@ -17,22 +17,16 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package org.me.strokeime;
+package org.strokeime;
 
-public class ColorTheme {
-    public final int bg;
-    public final int fg;
-    public final int txt; 
-    public final int txtBack;
-    public final int txtHot;
-    public final boolean isBold;
+import org.strokeime.gliphs.*;
 
-    public ColorTheme(int bg, int fg, int txt, int txtHot, int txtBack, boolean isBold) {
-        this.bg = bg;
-        this.fg = fg;
-        this.txt = txt;
-        this.txtHot = txtHot;
-        this.txtBack = txtBack;
-        this.isBold = isBold;
-    }
+public class GliphBank {
+    public static final Gliph GLIPH_DEL = new GliphDel();
+    public static final Gliph GLIPH_DEL_WORD = new GliphDelWord();
+    public static final Gliph GLIPH_ENTER = new GliphEnter();
+    public static final Gliph GLIPH_SHIFT = new GliphShift();
+    public static final Gliph GLIPH_SHIFT_LOCK = new GliphShiftLock();
+    public static final Gliph GLIPH_SPACE = new GliphSpace();
+    public static final Gliph GLIPH_TAB = new GliphTab();
 }

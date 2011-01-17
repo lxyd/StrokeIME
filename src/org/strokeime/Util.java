@@ -17,7 +17,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package org.me.strokeime;
+package org.strokeime;
 
 import android.graphics.RectF;
 import java.io.BufferedReader;

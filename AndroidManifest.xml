@@ -18,7 +18,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="org.me.strokeime"
+      package="org.strokeime"
       android:versionCode="10"
       android:versionName="0.1"> <!-- 0.1.0 = 10 -->
     <application android:label="@string/stroke_ime_label" android:icon="@drawable/icon">

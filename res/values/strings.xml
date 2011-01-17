@@ -26,25 +26,20 @@
     <string name="about_preference_summary">Version %1$s</string>
 
     <string name="about_dialog_title">StrokeIME v%1$s</string>
-    <string name="about_dialog_text">Here will be some description
-        of this program.
-        \nAnd, may be, changelog.
-        \nAnd, may be, changelog.
-        \nAnd, may be, changelog.
-        \nAnd, may be, changelog.
-        \nAnd, may be, changelog.
-        \nAnd, may be, changelog.
-        \nAnd, may be, changelog.
-        \nAnd, may be, changelog.
-        \nAnd, may be, changelog.
-        \nAnd, may be, changelog.
-        \nAnd, may be, changelog.
-        \nAnd, may be, changelog.
-        \nAnd, may be, changelog.
-        \nAnd, may be, changelog.
-        \nAnd, may be, changelog.
-        \nAnd, may be, changelog.
-        \nAnd, may be, changelog.
-        \nAnd, may be, changelog.
+    <string name="about_dialog_text">Stroke-based input method.
+        \nRussian and English languages are supported. Also, there is a layout with additional
+        letters necessary to type in German, French, Ukrainian, Belarusian and Esperanto.
+        \n
+        \n© 2011 Alexey Dubinin
+        \n
+        \nYou can send questions to &lt;strokeime@gmail.com&gt;
+        \n
+        \nThis program is distributed under the terms of the GNU GPL v3 or later.
+        \nYou can get the source code here:
+        \nhttp://github.com/Alexey-Dubinin/StrokeIME
+        \n
+        \n-------------
+        \nVersion 0.1:
+        \nFirst public version
     </string>
 </resources>

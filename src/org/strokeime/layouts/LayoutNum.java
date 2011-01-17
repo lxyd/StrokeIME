@@ -17,11 +17,11 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package org.me.strokeime.layouts;
+package org.strokeime.layouts;
 
-import org.me.strokeime.Layout;
-import org.me.strokeime.Action;
-import static org.me.strokeime.GliphBank.*;
+import org.strokeime.Layout;
+import org.strokeime.Action;
+import static org.strokeime.GliphBank.*;
 import static android.view.KeyEvent.*;
 
 public class LayoutNum extends Layout {

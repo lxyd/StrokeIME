@@ -17,17 +17,17 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package org.me.strokeime;
+package org.strokeime;
 
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
-import org.me.strokeime.layouts.*;
-import static org.me.strokeime.Layout.TYPE_PRIMARY;
-import static org.me.strokeime.Action.LAYOUT_BACK_TO_PRIMARY;
-import static org.me.strokeime.Action.LAYOUT_NEXT_PRIMARY;
-import static org.me.strokeime.Action.LAYOUT_PREV_PRIMARY;
+import org.strokeime.layouts.*;
+import static org.strokeime.Layout.TYPE_PRIMARY;
+import static org.strokeime.Action.LAYOUT_BACK_TO_PRIMARY;
+import static org.strokeime.Action.LAYOUT_NEXT_PRIMARY;
+import static org.strokeime.Action.LAYOUT_PREV_PRIMARY;
 
 public class LayoutSwitcher {
     private final Map<String, Layout> bank = new Hashtable<String, Layout>();

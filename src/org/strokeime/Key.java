@@ -17,16 +17,31 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package org.me.strokeime;
+package org.strokeime;
 
-import org.me.strokeime.gliphs.*;
+/**
+ * Action, combined with its label (gliph).
+ */
+public class Key {
+    public final Action action;
+    public final String label;
+    public final Gliph gliph;
 
-public class GliphBank {
-    public static final Gliph GLIPH_DEL = new GliphDel();
-    public static final Gliph GLIPH_DEL_WORD = new GliphDelWord();
-    public static final Gliph GLIPH_ENTER = new GliphEnter();
-    public static final Gliph GLIPH_SHIFT = new GliphShift();
-    public static final Gliph GLIPH_SHIFT_LOCK = new GliphShiftLock();
-    public static final Gliph GLIPH_SPACE = new GliphSpace();
-    public static final Gliph GLIPH_TAB = new GliphTab();
+    // constructor for special keys
+    public Key(Action action) {
+        this.action = action;
+        this.label = null;
+        this.gliph = null;
+    }
+
+    public Key(Action action, String label) {
+        this.action = action;
+        this.label = label;
+        this.gliph = null;
+    }
+    public Key(Action action, Gliph gliph) {
+        this.action = action;
+        this.label = null;
+        this.gliph = gliph;
+    }
 }

@@ -17,9 +17,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package org.me.strokeime.gliphs;
+package org.strokeime.gliphs;
 
-import org.me.strokeime.Gliph;
+import org.strokeime.Gliph;
 import android.graphics.Path;
 import android.graphics.RectF;
 

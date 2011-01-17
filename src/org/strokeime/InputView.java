@@ -17,7 +17,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package org.me.strokeime;
+package org.strokeime;
 
 import android.view.View;
 import android.view.MotionEvent;
@@ -28,7 +28,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.content.res.Resources;
-import static org.me.strokeime.Layout.*;
+import static org.strokeime.Layout.*;
 
 public class InputView extends View {
     // colors

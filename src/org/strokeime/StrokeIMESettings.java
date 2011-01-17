@@ -17,7 +17,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package org.me.strokeime;
+package org.strokeime;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -31,8 +31,8 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.Preference.OnPreferenceClickListener;
-import static org.me.strokeime.StrokeIME.PREFS_TAG;
-import static org.me.strokeime.StrokeIME.PREFSKEY_COLOR_THEME_LIGHT;
+import static org.strokeime.StrokeIME.PREFS_TAG;
+import static org.strokeime.StrokeIME.PREFSKEY_COLOR_THEME_LIGHT;
 
 public class StrokeIMESettings extends PreferenceActivity {
     private static final int DIALOG_ABOUT = 1;
