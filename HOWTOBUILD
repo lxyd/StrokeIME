@@ -9,11 +9,15 @@ where ANDROID_SDK_DIR is the root directory of the Android SDK
 for example,
 sdk.dir=/opt/android-sdk
 
-Place this file in the root of the project.
+Place this file in the root directory of the project.
 
-Also, you should edit file $ANDROID_SDK_DIR/tools/ant/ant_rules_r3.xml in the 
+Also, you must edit file $ANDROID_SDK_DIR/tools/ant/ant_rules_r3.xml in the 
 following way:
 - find the "compile" target
 - find the "javac" task
 - set the "encoding" attribute to "utf8" instead of "ascii"
+
+finally, change to the project directory and run:
+> ant clean debug
+You can find the .apk in the bin/ directory
 
