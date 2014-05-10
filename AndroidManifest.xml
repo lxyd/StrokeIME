@@ -19,8 +19,8 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="org.strokeime"
-      android:versionCode="10"
-      android:versionName="0.1"> <!-- 0.1.0 = 10 -->
+      android:versionCode="11"
+      android:versionName="0.1.1"> <!-- 0.1.1 = 11 -->
     <application android:label="@string/stroke_ime_label" android:icon="@drawable/icon">
         <service android:name="StrokeIME"
             android:label="@string/stroke_ime_label"

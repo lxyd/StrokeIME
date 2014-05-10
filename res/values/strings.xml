@@ -32,13 +32,15 @@
         \n
         \n© 2011 Alexey Dubinin
         \n
-        \nYou can send questions to &lt;strokeime@gmail.com&gt;
+        \nYou can send questions to &lt;dubininalexey@gmail.com&gt;
         \n
         \nThis program is distributed under the terms of the GNU GPL v3 or later.
         \nYou can get the source code here:
-        \nhttp://github.com/Alexey-Dubinin/StrokeIME
+        \nhttp://github.com/lxyd/StrokeIME
         \n
         \n-------------
+        \nVersion 0.1.1:
+        \nFix for Android 4
         \nVersion 0.1:
         \nFirst public version
     </string>

@@ -31,13 +31,15 @@
         \n
         \n© 2011 Алексей Дубинин
         \n
-        \nПожалуйста, отправляйте вопросы и замечания на &lt;strokeime@gmail.com&gt;
+        \nПожалуйста, отправляйте вопросы и замечания на &lt;dubininalexey@gmail.com&gt;
         \n
         \nПрограмма распространяется под лицензией GNU GPL версии 3 или более поздней. 
         \nИсходные тексты можно взять здесь:
-        \nhttp://github.com/Alexey-Dubinin/StrokeIME
+        \nhttp://github.com/lxyd/StrokeIME
         \n
         \n-------------
+        \nВерсия 0.1.1:
+        \nИсправление для Android 4
         \nВерсия 0.1:
         \nПервая публичная версия
     </string>

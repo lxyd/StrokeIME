@@ -112,7 +112,7 @@ public class InputView extends View {
         w = getWidth();
         h = getHeight();
         // add some additional vertical space for the panel
-        if(x < 0 || y < -0.05*h || x > w || y > h) {
+        if(x < 0 || y < 0.05*h || x > w || y > h) {
             // when point is outside of our View
             // TODO: add support for OB,OR,OL
             return Layout.OT;
