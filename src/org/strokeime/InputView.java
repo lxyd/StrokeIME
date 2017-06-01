@@ -52,6 +52,7 @@ public class InputView extends View {
     private Layout mLayout;
     private int mShiftState;
 
+    private final InputEvent mInputEvent = new InputEvent(this);
     private InputEvent.InputEventListener mInputListener = null;
 
     private void createPaints() {
@@ -146,8 +147,10 @@ public class InputView extends View {
         switch(event.getAction()) {
             case MotionEvent.ACTION_UP:
                 a = mLayout.getAction(mShiftState, mStrokeStartZone, getZone(event.getX(), event.getY()));
-                if(mInputListener != null && a != null)
-                    mInputListener.onInput(new InputEvent(this, a));
+                if(mInputListener != null && a != null) {
+                    mInputEvent.action = a;
+                    mInputListener.onInput(mInputEvent);
+                }
                 break;
             case MotionEvent.ACTION_DOWN:
                 mStrokeStartZone = getZone(event.getX(), event.getY());

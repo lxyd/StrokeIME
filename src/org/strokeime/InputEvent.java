@@ -26,9 +26,8 @@ public final class InputEvent extends EventObject {
         public void onInput(InputEvent event);
     }
 
-    public final Action action;
-    public InputEvent(Object source, Action action) {
+    public Action action;
+    public InputEvent(Object source) {
         super(source);
-        this.action = action;
     }
 }
